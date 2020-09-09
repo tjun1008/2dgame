@@ -1,0 +1,189 @@
+1. 깃허브는 분산 버전 관리툴인 깃을 사용하는 프로젝트를 지원하는 웹호스팅 서비스이다.
+깃허브 하는 방법은
+깃허브 계정을 만들고 온라인, 로컬 저장소를 만든 뒤 url을 저장하고
+git add를 통해 수정된 파일을 저장소에 올리고 이를 commit하면 저장소에 올릴것을 최종 확정하게 된다
+그렇게 최종 확정한 파일을 git remote -v 명령어를 통해 저장소의 URL을 확인하고 그 이름을 통해서 push를 하게된다
+
+ 
+
+2.
+
+ 
+
+>>> 1+2
+3
+>>> 100-1
+99
+>>> 7*52
+364
+>>> 1024/8
+128.0
+>>> 1/2
+0.5
+>>> 1//2
+0
+>>> 4/3
+1.3333333333333333
+>>> 4//3
+1
+>>> 7%3
+1
+>>> 7.9%3
+1.9000000000000004
+>>> 4%3.1
+0.8999999999999999
+>>> 3.141592653589794* (3*3)
+28.274333882308145
+>>>  3.141592653589794* 3 ** 3
+ 
+SyntaxError: unexpected indent
+>>> 3.141592653589794* 3 ** 3
+84.82300164692444
+>>> pi = 3.141592653589793
+>>> pi * 4 **2
+50.26548245743669
+>>> pi * 2.5 **2
+19.634954084936208
+>>> pi * 8 **3
+1608.495438637974
+>>> print(pi)
+3.141592653589793
+>>> r=7
+>>> area = pi*r**2
+>>> print(area)
+153.93804002589985
+>>> name1 = "Trump"
+>>> name2 = "강가니엘"
+>>> print(name1)
+Trump
+>>> print(name2)
+강가니엘
+>>> order = 5
+>>> type(order)
+<class 'int'>
+>>> type(pi)
+<class 'float'>
+
+>>> type(name1)
+<class 'str'>
+>>> 4>3
+True
+>>> 5 =5
+
+>>> 5<=9
+True
+>>> 14 == 13
+False
+>>> first = "fname"
+>>> last = "lname"
+>>> name = first + "" + last
+>>> name
+'fnamelname'
+>>> print(name)
+fnamelname
+>>> name*3
+'fnamelnamefnamelnamefnamelname'
+>>> name[0]
+'f'
+>>> name[2]
+'a'
+>>> name[-2]
+'m'
+>>> title = "Python 2D Game Programming"
+>>> title[0:6]
+'Python'
+>>> title[7:9]
+'2D'
+>>> title[-11:]
+'Programming'
+>>> subject = ['database','gamsogong','2dprogramming','english']
+>>> subject
+['database', 'gamsogong', '2dprogramming', 'english']
+>>> subject.append('math')
+>>> subject
+['database', 'gamsogong', '2dprogramming', 'english', 'math']
+>>> subject.sort()
+>>> subject
+['2dprogramming', 'database', 'english', 'gamsogong', 'math']
+>>> len(subject)
+5
+>>> food =['hambuger','rice','potato']
+>>> food +subject
+['hambuger', 'rice', 'potato', '2dprogramming', 'database', 'english', 'gamsogong', 'math']
+>>> unite = food +subject
+>>> unite.remove('potato')
+>>> unite
+['hambuger', 'rice', '2dprogramming', 'database', 'english', 'gamsogong', 'math']
+>>> score = {'momo' : 80,'zwi' : 85,'sana' : 98}
+>>> type(score)
+<class 'dict'>
+>>> score['momo']
+80
+
+>>> del score['momo']
+>>> score
+{'zwi': 85, 'sana': 98}
+>>> score.keys()
+dict_keys(['zwi', 'sana'])
+>>> score.values()
+dict_values([85, 98])
+>>> 'zwi' in score
+True
+>>> 'momo' in score
+False
+>>> score.clear()
+>>> score
+{}
+>>> t1 = (1,2,3)
+>>> t2 = (1,)
+>>> t3 = ()
+>>> t4 = 1,2,3,4
+>>> t4
+(1, 2, 3, 4)
+>>> type(t4)
+<class 'tuple'>
+>>> t5 = (1,'a',"park:",(1,2))
+>>> t1[1:]
+(2, 3)
+>>> t1+t5
+(1, 2, 3, 1, 'a', 'park:', (1, 2))
+>>> t4*2
+(1, 2, 3, 4, 1, 2, 3, 4)
+>>> s1 = {1,2,3}
+>>> type(s1)
+<class 'set'>
+>>> s1 = {1,2,2,4}
+>>> s1
+{1, 2, 4}
+>>> l1 = [1,2,2,2,2,3,3,3,3,4,5,4,3,5]
+>>> s1 = set(l1)
+>>> s1
+{1, 2, 3, 4, 5}
+>>> s2 = {3,5,6,7}
+
+>>> s1|s2
+{1, 2, 3, 4, 5, 6, 7}
+>>> s1&s2
+{3, 5}
+>>> s2-s1
+{6, 7}
+>>> s1-s2
+{1, 2, 4}
+>>> s1.add(8)
+>>> s1
+{1, 2, 3, 4, 5, 8}
+>>> s2.remove(6)
+>>> s2
+{3, 5, 7}
+
+ 
+
+보통 다른 언어에서는 변수를 직접 만들어야만 계산이 가능한데 파이썬에서는 간단히 숫자랑 덧셈,뺄셈 만 하니 편해보인다
+
+변수타입을 설정 안해도 알아서 프린트가 되고, 리스트에도 다양하게 넣을 수 있어서 입문하기에 좋은 언어라고 느껴졌다
+
+c나 c++ 같은데에서는 배열이 타입도 직접 정해줘야하고 sort나 remove같은것도 프로그래머가 직접 해줘야하는데
+
+파이썬은 간단히 sort만 입력해도 알아서 컴퓨터가 다 해주니 정말 편한언어인거같다
+
+배열도 여러가지의 종류가 있어서 신기했다. 마치 c++ stl을 보는듯했다 

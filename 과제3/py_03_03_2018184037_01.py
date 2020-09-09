@@ -1,0 +1,95 @@
+import turtle
+
+def w():
+    turtle.right(90)
+    turtle.penup()
+    turtle.forward(50)
+    turtle.right(180)
+    turtle.pendown()
+    turtle.forward(100)
+    turtle.right(180)
+    turtle.penup()
+    turtle.forward(50)
+    turtle.right(300)
+    turtle.pendown()
+    turtle.forward(100)
+    turtle.penup()
+    turtle.right(180)
+    turtle.forward(100)
+    turtle.pendown()
+    turtle.right(120)
+    turtle.forward(100) 
+    
+
+turtle.penup()
+turtle.goto(-200,200)
+turtle.right(90)
+turtle.pendown()
+turtle.forward(100)
+w()
+#ㅊ
+
+turtle.penup()
+turtle.right(120)
+turtle.forward(50)
+turtle.right(270)
+turtle.pendown()
+turtle.forward(50)
+turtle.right(90)
+turtle.penup()
+turtle.forward(50)
+turtle.right(180)
+turtle.pendown()
+turtle.forward(100) #ㅗ
+
+turtle.penup()
+turtle.forward(50)
+turtle.right(270)
+turtle.pendown()
+turtle.forward(200) #ㅣ
+
+
+turtle.penup()
+turtle.right(90)
+turtle.forward(100)
+turtle.right(90)
+turtle.pendown()
+w() #ㅈ
+
+turtle.penup()
+turtle.right(120)
+turtle.forward(50)
+turtle.right(270)
+turtle.forward(50)
+turtle.right(90)
+turtle.forward(50)
+turtle.right(180)
+turtle.pendown()
+turtle.forward(150)
+turtle.right(180)
+turtle.penup()
+turtle.forward(100)
+turtle.right(270)
+turtle.pendown()
+turtle.forward(100) #ㅜ
+
+turtle.penup()
+turtle.goto(250,150)
+turtle.pendown()
+turtle.circle(50)
+turtle.penup()
+turtle.forward(100)
+turtle.right(270)
+turtle.pendown()
+turtle.forward(100)
+turtle.right(180)
+turtle.penup()
+turtle.forward(90)
+turtle.right(270)
+turtle.forward(50)
+turtle.pendown()
+turtle.forward(100)
+turtle.right(270)
+turtle.forward(100) #은
+
+turtle.exitonclick()
