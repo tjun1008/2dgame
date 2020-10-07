@@ -14,4 +14,7 @@
    
    
 ### 3.예상게임 실행흐름 
-![1](./이미지가 있는 폴더/이미지이름.형식)
+![1](https://github.com/tjun1008/2dgame/blob/master/%EA%B8%B0%EB%A7%90%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/tp1st_1.jpg?raw=true)
+   - 1 스테이지는 튜토리얼 스테이지 인데, 튜토리얼 스테이지에서는 간단한 동작, 아이템을 얻는법 몬스터를 쓰러트리는법을 알려주고 해당 키를 알려준다
+![1](https://github.com/tjun1008/2dgame/blob/master/%EA%B8%B0%EB%A7%90%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/tp1st_1.jpg?raw=true)
+![1](https://github.com/tjun1008/2dgame/blob/master/%EA%B8%B0%EB%A7%90%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/tp1st_1.jpg?raw=true)
