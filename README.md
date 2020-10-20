@@ -19,10 +19,10 @@
 ![1](https://github.com/tjun1008/2dgame/blob/master/%EA%B8%B0%EB%A7%90%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/image/tp1st_1.jpg?raw=true)
    - 1 스테이지는 튜토리얼 스테이지 인데, 튜토리얼 스테이지에서는 간단한 동작, 아이템을 얻는법 몬스터를 쓰러트리는법을 알려주고 해당 키를 알려준다   
    
-![2](https://github.com/tjun1008/2dgame/blob/master/%EA%B8%B0%EB%A7%90%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/tp1st_2.jpg?raw=true)
+![2](https://github.com/tjun1008/2dgame/blob/master/%EA%B8%B0%EB%A7%90%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/image/tp1st_2.jpg?raw=true)
    - 2~4 스테이지는 본격적으로 플레이어가 지형을 오가면서 몬스터를 다 처치하고 포탈을 타서 다음 스테이지로 이동한다   
    
-![3](https://github.com/tjun1008/2dgame/blob/master/%EA%B8%B0%EB%A7%90%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/tp1st_3.jpg?raw=true)
+![3](https://github.com/tjun1008/2dgame/blob/master/%EA%B8%B0%EB%A7%90%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/image/tp1st_3.jpg?raw=true)
    - 5스테이지이자 마지막 보스스테이지에서는 플레이어가 그동안 모은 아이템과 물약 등을 활용해서 보스 몬스터를 죽이는 스테이지다. 보스 몬스터를 쓰러트리면 게임 클리어가 된다.   
    
    
