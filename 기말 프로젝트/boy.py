@@ -23,24 +23,28 @@ class Boy:
     def __init__(self, rand_pos=False):
         if rand_pos:
             self.pos = (
-                random.randint(100, 700),
-                random.randint(100, 500)
+                #random.randint(100, 700),
+                #random.randint(100, 500)
+                random.randint(100, 174),
+                random.randint(100, 176)
             )
             self.action = random.randint(0, 3)
         else:
             self.pos = get_canvas_width() // 2, get_canvas_height() // 2
             self.action = 3
         self.delta = 0, 0
-        self.fidx = random.randint(0, 7)
+        self.fidx = random.randint(0, 5)
         self.target = None
         self.targets = []
         self.speed = 0
         if Boy.image == None:
             Boy.image = gfw_image.load(RES_DIR + '/animation_sheet.png')
+            #Boy.image = gfw_image.load(RES_DIR + '/girl_animation_sheet.png')
 
     def draw(self):
         sx = self.fidx * 100
         sy = self.action * 100
+        #self.image.clip_draw(sx, sy, 29, 44, *self.pos)
         self.image.clip_draw(sx, sy, 100, 100, *self.pos)
 
     def update(self):
