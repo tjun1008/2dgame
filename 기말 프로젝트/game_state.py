@@ -1,27 +1,26 @@
 import gfw
 from pico2d import *
 from gobj import *
-from ball import Ball
-from boy import Boy
+from player import Player
 
 def enter():
-    global grass, boy,background
+    global grass, player,background
     background = load_image('image/background.png')
     grass = Grass()
-    boy = Boy()
+    player = Player()
 
 def update():
-    boy.update()
-    for b in Ball.balls: b.update()
+    player.update()
+    #for b in Ball.balls: b.update()
 
 def draw():
     background.draw(640, 360)
     grass.draw()
-    for b in Ball.balls: b.draw()
-    boy.draw()
+    #for b in Ball.balls: b.draw()
+    player.draw()
 
 def handle_event(e):
-    global boy
+    global player
     # prev_dx = boy.dx
     if e.type == SDL_QUIT:
         gfw.quit()
@@ -29,7 +28,7 @@ def handle_event(e):
         if e.key == SDLK_ESCAPE:
             gfw.pop()
 
-    boy.handle_event(e)
+    player.handle_event(e)
     #Boy.handle_event(boy, e)
 
     # print(balls)
