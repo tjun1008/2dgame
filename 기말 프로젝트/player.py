@@ -1,8 +1,9 @@
 import random
 from pico2d import *
 import gfw
-import gfw_image
 from gobj import *
+from ball import Ball
+from ball_L import Ball_L
 import helper
 
 class IdleState:
@@ -14,7 +15,8 @@ class IdleState:
         return IdleState.singleton
 
     def __init__(self):
-        self.image = gfw_image.load(RES_DIR + '/Magic_Girl_Idle_animation.png')
+        self.image = gfw.image.load(RES_DIR + '/Magic_Girl_Idle_animation.png')
+
 
     def enter(self):
         self.time = 0
@@ -34,6 +36,12 @@ class IdleState:
        # self.fidx = int(frame) % 5
         self.fidx = int(frame) % 8
 
+    def fire(self):
+        self.ball = Ball(self.player.pos, (5,5))
+        Ball.balls.append(self.ball)
+        #gfw.world.add(gfw.layer.ball, ball)
+        print('Ball count = %d' % len(Ball.balls))
+
     def handle_event(self, e):
         pair = (e.type, e.key)
         if pair in Player.KEY_MAP:
@@ -47,7 +55,7 @@ class IdleState:
             if pair == (SDL_KEYDOWN, SDLK_DOWN):
                 self.player.set_state(Up)
         elif pair == Player.KEYDOWN_SPACE:
-            pass
+            self.fire()
 
 class IdleState_L:
     @staticmethod
@@ -58,7 +66,7 @@ class IdleState_L:
         return IdleState_L.singleton
 
     def __init__(self):
-        self.image = gfw_image.load(RES_DIR + '/Magic_Girl_Idle_animation_L.png')
+        self.image = gfw.image.load(RES_DIR + '/Magic_Girl_Idle_animation_L.png')
 
     def enter(self):
         self.time = 0
@@ -78,6 +86,12 @@ class IdleState_L:
        # self.fidx = int(frame) % 5
         self.fidx = int(frame) % 8
 
+    def L_fire(self):
+        self.ball = Ball_L(self.player.pos, (5,5))
+        Ball_L.balls.append(self.ball)
+        #gfw.world.add(gfw.layer.ball, ball)
+        print('Ball_L count = %d' % len(Ball_L.balls))
+
     def handle_event(self, e):
         pair = (e.type, e.key)
         if pair in Player.KEY_MAP:
@@ -91,7 +105,7 @@ class IdleState_L:
             if pair == (SDL_KEYDOWN, SDLK_DOWN):
                 self.player.set_state(Up)
         elif pair == Player.KEYDOWN_SPACE:
-            pass
+            self.L_fire()
 
 class Rightrun:
     @staticmethod
@@ -102,7 +116,7 @@ class Rightrun:
         return Rightrun.singleton
 
     def __init__(self):
-        self.image = gfw_image.load(RES_DIR + '/Magic_Girl_Walk_Right_animation.png')
+        self.image = gfw.image.load(RES_DIR + '/Magic_Girl_Walk_Right_animation.png')
 
     def enter(self):
         self.time = 0
@@ -121,20 +135,27 @@ class Rightrun:
         frame = self.time * 15
         self.fidx = int(frame) % 6
 
+    def fire(self):
+        self.ball = Ball(self.player.pos, (5,5))
+        Ball.balls.append(self.ball)
+        #gfw.world.add(gfw.layer.ball, ball)
+        print('Ball count = %d' % len(Ball.balls))
+
     def handle_event(self, e):
         pair = (e.type, e.key)
         if pair in Player.KEY_MAP:
-            if e.type == SDL_KEYUP: self.player.set_state(IdleState)
-            #self.updateAction(0, -self.delta[0])
-            self.target = None
             self.player.delta = point_add(self.player.delta, Player.KEY_MAP[pair])
-            self.targets = []
-            self.speed = 0
-            #self.updateDelta(*Player.KEY_MAP[pair])
-        #if pair in Player.KEY_MAP:
-            #if e.type == SDL_KEYUP:
-                #self.player.set_state(IdleState)
-            #self.player.delta = point_add(self.player.delta, Player.KEY_MAP[pair])
+            if e.type == SDL_KEYUP: self.player.set_state(IdleState)
+            if pair == (SDL_KEYDOWN, SDLK_RIGHT):
+                self.player.set_state(Rightrun)
+            if pair == (SDL_KEYDOWN, SDLK_LEFT):
+                self.player.set_state(Leftrun)
+            if pair == (SDL_KEYDOWN, SDLK_UP):
+                self.player.set_state(Up)
+            if pair == (SDL_KEYDOWN, SDLK_DOWN):
+                self.player.set_state(Up)
+        elif pair == Player.KEYDOWN_SPACE:
+            self.fire()
 
 class Leftrun:
     @staticmethod
@@ -145,7 +166,7 @@ class Leftrun:
         return Leftrun.singleton
 
     def __init__(self):
-        self.image = gfw_image.load(RES_DIR + '/Magic_Girl_Walk_animation.png')
+        self.image = gfw.image.load(RES_DIR + '/Magic_Girl_Walk_animation.png')
 
     def enter(self):
         self.time = 0
@@ -164,20 +185,28 @@ class Leftrun:
         frame = self.time * 15
         self.fidx = int(frame) % 6
 
+    def L_fire(self):
+        self.ball = Ball_L(self.player.pos, (5,5))
+        Ball_L.balls.append(self.ball)
+        #gfw.world.add(gfw.layer.ball, ball)
+        print('Ball_L count = %d' % len(Ball_L.balls))
+
     def handle_event(self, e):
         pair = (e.type, e.key)
         if pair in Player.KEY_MAP:
-            if e.type == SDL_KEYUP: self.player.set_state(IdleState_L)
-            #self.updateAction(0, -self.delta[0])
-            self.target = None
             self.player.delta = point_add(self.player.delta, Player.KEY_MAP[pair])
-            self.targets = []
-            self.speed = 0
-            #self.updateDelta(*Player.KEY_MAP[pair])
-        #if pair in Player.KEY_MAP:
-            #if e.type == SDL_KEYUP:
-                #self.player.set_state(IdleState)
-            #self.player.delta = point_add(self.player.delta, Player.KEY_MAP[pair])
+            if e.type == SDL_KEYUP: self.player.set_state(IdleState_L)
+            if pair == (SDL_KEYDOWN, SDLK_RIGHT):
+                self.player.set_state(Rightrun)
+            if pair == (SDL_KEYDOWN, SDLK_LEFT):
+                self.player.set_state(Leftrun)
+            if pair == (SDL_KEYDOWN, SDLK_UP):
+                self.player.set_state(Up)
+            if pair == (SDL_KEYDOWN, SDLK_DOWN):
+                self.player.set_state(Up)
+        elif pair == Player.KEYDOWN_SPACE:
+            self.L_fire()
+
 
 class Up:
     @staticmethod
@@ -188,7 +217,7 @@ class Up:
         return Up.singleton
 
     def __init__(self):
-        self.image = gfw_image.load(RES_DIR + '/Magic_Girl_Walk_up_animation.png')
+        self.image = gfw.image.load(RES_DIR + '/Magic_Girl_Walk_up_animation.png')
 
     def enter(self):
         self.time = 0
@@ -207,6 +236,8 @@ class Up:
         frame = self.time * 15
        # self.fidx = int(frame) % 5
         self.fidx = int(frame) % 8
+
+
 
     def handle_event(self, e):
         pair = (e.type, e.key)
@@ -244,10 +275,9 @@ class Player:
         self.targets = []
         self.speed = 0
         self.time = 0
+        #self.firestate = False
         self.state = None
         self.set_state(IdleState)
-        self.image = gfw_image.load(RES_DIR + '/Magic_Girl_Idle_animation.png')
-        self.image2 = gfw_image.load(RES_DIR + '/ryu_1.png')
 
     def set_state(self, clazz):
         if self.state != None:
@@ -258,26 +288,11 @@ class Player:
     def draw(self):
         self.state.draw()
 
-    def updateDelta(self, ddx, ddy):
-        dx,dy = self.delta
-        dx += ddx
-        dy += ddy
-        if ddx != 0:
-            self.updateAction(dx, ddx)
-        self.delta = dx, dy
-
-    def updateAction(self, dx, ddx):
-        self.action = \
-            0 if dx < 0 else \
-            1 if dx > 0 else \
-            2 if ddx > 0 else 3
 
     def update(self):
         self.state.update()
 
-    def fire(self):
-        self.time = 0
-        self.set_state(Rightrun)
 
     def handle_event(self, e):
         self.state.handle_event(e)
+
