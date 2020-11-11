@@ -296,3 +296,9 @@ class Player:
     def handle_event(self, e):
         self.state.handle_event(e)
 
+    def get_bb(self):
+        hw = 20
+        hh = 40
+        x, y = self.pos
+        return x - hw, y - hh, x + hw, y + hh
+

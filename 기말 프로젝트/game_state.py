@@ -4,24 +4,43 @@ from gobj import *
 from player import Player
 from ball import Ball
 from ball_L import Ball_L
+from stage1 import  Stage1,Portal
+from stage2 import  Stage2
+
+
 
 def enter():
-    gfw.world.init(['bg', 'enemy', 'ball', 'player', 'ui'])
-    global grass, player,background,portal
-    portal = load_image('image/portal.png')
-    background = load_image('image/background.png')
-    grass = Grass()
+    gfw.world.init(['bg', 'enemy', 'ball', 'player','potal' 'ui'])
+    global player,stage1,portal,stage2
+    portal = Portal()
+    stage1 = Stage1()
+    stage2 = Stage2()
     player = Player()
 
+    global map
+    map = 1
+
 def update():
+    global stage1,map
+    gfw.world.update()
     player.update()
     for b in Ball.balls: b.update()
     for b in Ball_L.balls: b.update()
 
+    if collides_box(player, portal):
+        print("COLLISION")
+        player.pos = 100, 110
+        del(stage1)
+        map = 2
+
+
+
 def draw():
-    background.draw(640, 360)
-    grass.draw()
-    portal.draw(1100,650)
+    if(map == 1):
+        stage1.draw()
+    elif map ==2:
+        stage2.draw()
+
     for b in Ball.balls: b.draw()
     for b in Ball_L.balls: b.draw()
     player.draw()
@@ -36,9 +55,7 @@ def handle_event(e):
             gfw.pop()
 
     player.handle_event(e)
-    #Boy.handle_event(boy, e)
 
-    # print(balls)
 def exit():
     pass
 

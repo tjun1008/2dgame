@@ -1,35 +1,23 @@
-import random
 from pico2d import *
+from gobj import *
 import gfw
 
-RES_DIR = 'image'
+class Stage2:
+    def __init__(self):
+        global grass,background, portal
+        portal = Portal()
+        background = load_image('image/background.png')
+        grass = Grass()
 
-def rand(val):
-    return val * random.uniform(0.9, 1.1)
+    def draw(self):
+        background.draw(640, 360)
+        grass.draw()
+        portal.draw()
 
-def point_add(point1, point2):
-    x1,y1 = point1
-    x2,y2 = point2
-    return x1+x2, y1+y2
+    def update(self):
+        pass
 
-def move_obj(obj):
-    obj.pos = point_add(obj.pos, obj.delta)
 
-def collides_box(a, b):
-    (la, ba, ra, ta) = a.get_bb()
-    (lb, bb, rb, tb) = b.get_bb()
-
-    if la > rb: return False
-    if ra < lb: return False
-    if ba > tb: return False
-    if ta < bb: return False
-
-    return True
-
-def draw_collision_box():
-    for obj in gfw.world.all_objects():
-        if hasattr(obj, 'get_bb'):
-            draw_rectangle(*obj.get_bb())
 
 class Grass:
     def __init__(self):
@@ -42,14 +30,14 @@ class Grass:
         self.image.draw(640, 30)
         self.grass1.draw(150, 300)
         self.grass2.draw(400, 300)
-        self.grass3.draw(650, 300)
+        #self.grass3.draw(650, 300)
 
         self.grass1.draw(650, 600)
         self.grass2.draw(900, 600)
-        self.grass3.draw(1150, 600)
+        #self.grass3.draw(1150, 600)
 
-        self.ladder.draw(150, 170)
-        self.ladder.draw(650, 440)
+        #self.ladder.draw(150, 170)
+        #self.ladder.draw(650, 440)
 
     def update(self):
         pass
@@ -70,7 +58,3 @@ class Portal:
         hh = 40
         x, y = self.pos
         return x - hw, y - hh, x + hw, y + hh
-
-
-if __name__ == "__main__":
-	print("Running test code ^_^")
