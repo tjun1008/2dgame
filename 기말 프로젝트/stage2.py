@@ -5,8 +5,8 @@ import gfw
 class Stage2:
     def __init__(self):
         global grass,background, portal
-        portal = Portal()
-        background = load_image('image/background.png')
+        portal = Portal2()
+        background = load_image('image/background1.png')
         grass = Grass()
 
     def draw(self):
@@ -28,24 +28,24 @@ class Grass:
         self.ladder = load_image(RES_DIR + '/ladder1.png')
     def draw(self):
         self.image.draw(640, 30)
-        self.grass1.draw(150, 300)
-        self.grass2.draw(400, 300)
-        #self.grass3.draw(650, 300)
+        self.grass1.draw(30, 600)
+        self.grass2.draw(230, 600)
+        self.grass3.draw(480, 600)
 
-        self.grass1.draw(650, 600)
-        self.grass2.draw(900, 600)
-        #self.grass3.draw(1150, 600)
+        self.grass1.draw(480, 300)
+        self.grass2.draw(720, 300)
+        self.grass3.draw(960, 300)
 
-        #self.ladder.draw(150, 170)
-        #self.ladder.draw(650, 440)
+        self.ladder.draw(480, 450)
+        self.ladder.draw(960, 170)
 
     def update(self):
         pass
 
-class Portal:
+class Portal2:
     def __init__(self):
         self.image = gfw.image.load(RES_DIR + '/portal.png')
-        self.pos = (1100,650)
+        self.pos = (1100,100)
 
     def draw(self):
         self.image.draw(*self.pos)
