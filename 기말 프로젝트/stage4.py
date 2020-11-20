@@ -2,10 +2,10 @@ from pico2d import *
 from gobj import *
 import gfw
 
-class Stage3:
+class Stage4:
     def __init__(self):
         global grass,background, portal
-        portal = Portal3()
+        portal = Portal()
         background = load_image('image/background1.png')
         grass = Grass()
 
@@ -21,32 +21,22 @@ class Stage3:
 
 class Grass:
     def __init__(self):
-        self.tile1 = load_image(RES_DIR + '/Tile_2.png')
-        self.grass1 = load_image(RES_DIR + '/Tile_13.png')
-        self.grass2 = load_image(RES_DIR + '/Tile_14.png')
-        self.grass3 = load_image(RES_DIR + '/Tile_15.png')
+        self.image = load_image(RES_DIR + '/grass1.png')
+        self.grass1 = load_image(RES_DIR + '/Tile_10.png')
+        self.grass2 = load_image(RES_DIR + '/Tile_11.png')
+        self.grass3 = load_image(RES_DIR + '/Tile_12.png')
         self.ladder = load_image(RES_DIR + '/ladder1.png')
     def draw(self):
-        self.tile1.draw(0, 30)
-        self.tile1.draw(256, 30)
-
-        self.grass2.draw(480, 30)
-        self.grass1.draw(480, 286)
-        self.ladder.draw(340, 170)
-
-        self.tile1.draw(710, 286)
-        self.tile1.draw(966, 286)
-        self.tile1.draw(1222, 286)
-
+        self.image.draw(640, 30)
 
 
     def update(self):
         pass
 
-class Portal3:
+class Portal4:
     def __init__(self):
         self.image = gfw.image.load(RES_DIR + '/portal.png')
-        self.pos = (1150,350)
+        self.pos = (1100,100)
 
     def draw(self):
         self.image.draw(*self.pos)

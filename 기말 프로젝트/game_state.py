@@ -6,20 +6,23 @@ from ball import Ball
 from ball_L import Ball_L
 from stage1 import  Stage1,Portal1
 from stage2 import  Stage2,Portal2
-from stage3 import  Stage3
+from stage3 import  Stage3,Portal3
+from stage4 import  Stage4,Portal4
 
 
 
 def enter():
     gfw.world.init(['bg', 'enemy', 'ball', 'player','portal','ui'])
-    global player,stage1,stage2,stage3,portal1,portal2
+    global player,stage1,stage2,stage3,stage4,portal1,portal2,portal3,portal4
     portal1 = Portal1()
     portal2 = Portal2()
+    portal3 = Portal3()
     #gfw.world.add(gfw.layer.portal, portal)
 
     stage1 = Stage1()
     stage2 = Stage2()
     stage3 = Stage3()
+    stage4 = Stage4()
 
     player = Player()
     gfw.world.add(gfw.layer.player,player)
@@ -28,7 +31,7 @@ def enter():
     map = 1
 
 def update():
-    global stage1,stage2,map
+    global stage1,stage2,stage3,stage4,map
     gfw.world.update()
     player.update()
     for b in Ball.balls: b.update()
@@ -46,6 +49,13 @@ def update():
         map += 1
         print(map)
 
+    if collides_box(player, portal3):
+        player.pos = 100, 110
+        del (stage3)
+        map += 1
+        print(map)
+
+
 
 
 def draw():
@@ -56,6 +66,8 @@ def draw():
         stage2.draw()
     elif map ==3:
         stage3.draw()
+    elif map == 4:
+        stage4.draw()
 
     for b in Ball.balls: b.draw()
     for b in Ball_L.balls: b.draw()
