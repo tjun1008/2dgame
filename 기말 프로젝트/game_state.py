@@ -2,6 +2,7 @@ import gfw
 from pico2d import *
 from gobj import *
 from player import Player
+from zombie import Zombie
 from ball import Ball
 from ball_L import Ball_L
 from stage1 import  Stage1,Portal1
@@ -12,7 +13,8 @@ from stage4 import  Stage4,Portal4
 
 
 def enter():
-    gfw.world.init(['bg', 'enemy', 'ball', 'player','portal','ui'])
+    gfw.world.init(['bg', 'monster', 'ball', 'player','portal','ui'])
+    Zombie.load_all_images()
     global player,stage1,stage2,stage3,stage4,portal1,portal2,portal3,portal4
     portal1 = Portal1()
     portal2 = Portal2()
@@ -29,6 +31,9 @@ def enter():
 
     global map
     map = 1
+
+    global zombie_time
+    zombie_time = 1
 
 def update():
     global stage1,stage2,stage3,stage4,map
@@ -54,6 +59,12 @@ def update():
         del (stage3)
         map += 1
         print(map)
+
+    global zombie_time
+    zombie_time -= gfw.delta_time
+    if zombie_time <= 0:
+        gfw.world.add(gfw.layer.monster, Zombie())
+        zombie_time = 5
 
 
 

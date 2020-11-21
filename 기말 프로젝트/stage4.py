@@ -5,7 +5,7 @@ import gfw
 class Stage4:
     def __init__(self):
         global grass,background, portal
-        portal = Portal()
+        #portal = Portal()
         background = load_image('image/background1.png')
         grass = Grass()
 
