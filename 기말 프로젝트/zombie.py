@@ -2,12 +2,10 @@ import random
 from pico2d import *
 import gfw
 import gobj
-from BehaviorTree import BehaviorTree, SelectorNode, SequenceNode, LeafNode
+from BehaviorTree import BehaviorTree, SelectorNode, LeafNode
 
 class Zombie:
-    PAT_POSITIONS = [
-        (150, 210), (650, 210)
-    ]
+
     ACTIONS = ['Attack', 'Dead', 'Idle', 'Walk']
     CHASE_DISTANCE_SQ = 250 ** 2
     IDLE_INTERVAL = 2.0
@@ -15,13 +13,26 @@ class Zombie:
     FPS = 12
     # FCOUNT = 10
     def __init__(self):
+
+        n = random.randint(0, 1)
+
+        if n == 0:
+            self.PAT_POSITIONS = [(150, 210), (650, 210)]
+        else:
+            self.PAT_POSITIONS = [(0, 30), (1200, 30)]
+
+        print(n)
+
         if len(Zombie.images) == 0:
             Zombie.load_all_images()
 
-        self.pos = (
-            random.randint(0, get_canvas_width()),
-            random.randint(0, get_canvas_height())
-        )
+        if n == 0:
+            self.pos = (random.randint(150,650),210)
+        else:
+            self.pos = (random.randint(0,1100),30)
+
+
+
         self.delta = 0.1, 0.1
         # self.find_nearest_pos()
         self.char = random.choice(['male', 'female'])
@@ -40,7 +51,7 @@ class Zombie:
         nearest_dsq = 1000000000
         index = 0
         nearest_index = 0
-        for (px, py) in Zombie.PAT_POSITIONS:
+        for (px, py) in self.PAT_POSITIONS:
             dsq = (x-px)**2 + (y-py)**2
             # print(':', index, (x,y), '-', (px, py), dsq)
             if nearest_dsq > dsq:
@@ -55,16 +66,16 @@ class Zombie:
         if self.patrol_order < 0:
             self.find_nearest_pos()
             return BehaviorTree.SUCCESS
-        self.set_target(Zombie.PAT_POSITIONS[self.patrol_order])
+        self.set_target(self.PAT_POSITIONS[self.patrol_order])
         # print('pos=', self.pos, "patrol order = ", self.patrol_order, " target =", self.target)
-        self.patrol_order = (self.patrol_order + 1) % len(Zombie.PAT_POSITIONS)
+        self.patrol_order = (self.patrol_order + 1) % len(self.PAT_POSITIONS)
         return BehaviorTree.SUCCESS
 
     def move_to_target(self):
         x,y = self.pos
         self.speed = 100
         self.update_position()
-        for (px, py) in Zombie.PAT_POSITIONS:
+        for (px, py) in self.PAT_POSITIONS:
             dsq = (px-x)**2 + (py- y)**2
             if dsq < Zombie.CHASE_DISTANCE_SQ ** 2:
                 return BehaviorTree.SUCCESS

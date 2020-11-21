@@ -4,7 +4,7 @@ import gfw
 from gobj import *
 from ball import Ball
 from ball_L import Ball_L
-import helper
+#import helper
 
 class IdleState:
     @staticmethod

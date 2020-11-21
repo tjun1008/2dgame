@@ -2,12 +2,15 @@ from pico2d import *
 from gobj import *
 import gfw
 
+
 class Stage1:
     def __init__(self):
         global grass,background, portal
         portal = Portal1()
         background = load_image('image/background.png')
         grass = Grass()
+
+
 
     def draw(self):
         background.draw(640, 360)

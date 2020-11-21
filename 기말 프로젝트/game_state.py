@@ -32,8 +32,8 @@ def enter():
     global map
     map = 1
 
-    global zombie_time
-    zombie_time = 1
+    #global zombie_time
+    #zombie_time = 1
 
 def update():
     global stage1,stage2,stage3,stage4,map
@@ -42,17 +42,23 @@ def update():
     for b in Ball.balls: b.update()
     for b in Ball_L.balls: b.update()
 
+
     if collides_box(player, portal1):
         player.pos = 30, 650
         del (stage1)
         map += 1
         print(map)
 
-    if collides_box(player, portal2):
-        player.pos = 100, 110
-        del (stage2)
-        map += 1
-        print(map)
+
+
+    if map ==2:
+        stage2.update()
+        if collides_box(player, portal2):
+            player.pos = 100, 110
+            del (stage2)
+            map += 1
+            print(map)
+
 
     if collides_box(player, portal3):
         player.pos = 100, 110
@@ -60,11 +66,11 @@ def update():
         map += 1
         print(map)
 
-    global zombie_time
-    zombie_time -= gfw.delta_time
-    if zombie_time <= 0:
-        gfw.world.add(gfw.layer.monster, Zombie())
-        zombie_time = 5
+    #global zombie_time
+    #zombie_time -= gfw.delta_time
+   # if zombie_time <= 0:
+        #gfw.world.add(gfw.layer.monster, Zombie())
+        #zombie_time = 5
 
 
 
