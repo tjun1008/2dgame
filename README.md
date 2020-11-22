@@ -17,18 +17,32 @@
    
    
    
-## git commit 
-![1](https://github.com/tjun1008/2dgame/blob/master/%EA%B8%B0%EB%A7%90%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/image/tp1st_1.jpg?raw=true)
-   - 1 스테이지는 튜토리얼 스테이지 인데, 튜토리얼 스테이지에서는 간단한 동작, 아이템을 얻는법 몬스터를 쓰러트리는법을 알려주고 해당 키를 알려준다   
+## 3. git commit 
+![1](https://github.com/tjun1008/2dgame/blob/master/%EC%88%98%EC%97%85%EB%82%B4%EC%9A%A9/image/2d%20%EC%BB%A4%EB%B0%8B.PNG?raw=true)
+   - 전체 커밋수   
    
-![2](https://github.com/tjun1008/2dgame/blob/master/%EA%B8%B0%EB%A7%90%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/image/tp1st_2.jpg?raw=true)
-   - 2~4 스테이지는 본격적으로 플레이어가 지형을 오가면서 몬스터를 다 처치하고 포탈을 타서 다음 스테이지로 이동한다   
+![2](https://github.com/tjun1008/2dgame/blob/master/%EC%88%98%EC%97%85%EB%82%B4%EC%9A%A9/image/2%EC%A3%BC%EC%B0%A8.PNG?raw=true)
+   - 2주차
    
-![3](https://github.com/tjun1008/2dgame/blob/master/%EA%B8%B0%EB%A7%90%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/image/tp1st_3.jpg?raw=true)
-   - 5스테이지이자 마지막 보스스테이지에서는 플레이어가 그동안 모은 아이템과 물약 등을 활용해서 보스 몬스터를 죽이는 스테이지다. 보스 몬스터를 쓰러트리면 게임 클리어가 된다.   
+![3](https://github.com/tjun1008/2dgame/blob/master/%EC%88%98%EC%97%85%EB%82%B4%EC%9A%A9/image/4%EC%A3%BC%EC%B0%A8.PNG?raw=true)
+   - 4주차 
+   
+![4](https://github.com/tjun1008/2dgame/blob/master/%EC%88%98%EC%97%85%EB%82%B4%EC%9A%A9/image/5%EC%A3%BC%EC%B0%A8.PNG?raw=true)
+   - 5주차
+   
+![5](https://github.com/tjun1008/2dgame/blob/master/%EC%88%98%EC%97%85%EB%82%B4%EC%9A%A9/image/6%EC%A3%BC%EC%B0%A8.PNG?raw=true)
+   - 6주차 
+   
+![6](https://github.com/tjun1008/2dgame/blob/master/%EC%88%98%EC%97%85%EB%82%B4%EC%9A%A9/image/7%EC%A3%BC%EC%B0%A8.PNG?raw=true)
+   - 7주차 
    
    
+## 4. class 구성정보
+
+![7](https://github.com/tjun1008/2dgame/blob/master/%EC%88%98%EC%97%85%EB%82%B4%EC%9A%A9/image/2d%20%ED%81%B4%EB%9E%98%EC%8A%A4.PNG?raw=true)
+   - 전체적으로 title,logo state, game state, player 클래스, stage 클래스, monster(zombie) 클래스, (fire)ball 클래스가 있다
    
-## 4. 개발일정
+   
+
    
    
