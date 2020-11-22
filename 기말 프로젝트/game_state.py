@@ -26,6 +26,7 @@ def enter():
     stage3 = Stage3()
     stage4 = Stage4()
 
+
     player = Player()
     gfw.world.add(gfw.layer.player,player)
 
@@ -38,9 +39,9 @@ def enter():
 def update():
     global stage1,stage2,stage3,stage4,map
     gfw.world.update()
-    player.update()
-    for b in Ball.balls: b.update()
-    for b in Ball_L.balls: b.update()
+    #player.update()
+    #for b in Ball.balls: b.update()
+    #for b in Ball_L.balls: b.update()
 
 
     if collides_box(player, portal1):
@@ -86,8 +87,8 @@ def draw():
     elif map == 4:
         stage4.draw()
 
-    for b in Ball.balls: b.draw()
-    for b in Ball_L.balls: b.draw()
+    #for b in Ball.balls: b.draw()
+    #for b in Ball_L.balls: b.draw()
     #player.draw()
     gfw.world.draw()
 

@@ -26,6 +26,10 @@ def all_objects():
         for obj in layer_objects:
             yield obj
 
+def object(layer_index, object_index):
+    layer_objects = objects[layer_index]
+    return layer_objects[object_index]
+
 def objects_at(layer_index):
     for obj in objects[layer_index]:
         yield obj

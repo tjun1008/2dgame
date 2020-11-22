@@ -17,9 +17,9 @@ class Zombie:
         n = random.randint(0, 1)
 
         if n == 0:
-            self.PAT_POSITIONS = [(150, 210), (650, 210)]
+            self.PAT_POSITIONS = [(480, 350), (960, 350)]
         else:
-            self.PAT_POSITIONS = [(0, 30), (1200, 30)]
+            self.PAT_POSITIONS = [(0, 100), (1200, 100)]
 
         print(n)
 
@@ -27,9 +27,9 @@ class Zombie:
             Zombie.load_all_images()
 
         if n == 0:
-            self.pos = (random.randint(150,650),210)
+            self.pos = (random.randint(480,960),350)
         else:
-            self.pos = (random.randint(0,1100),30)
+            self.pos = (random.randint(0,1100),100)
 
 
 
@@ -41,8 +41,11 @@ class Zombie:
         self.speed = random.randint(100, 150)
         self.fidx = 0
         self.time = 0
+        self.ball = None
         #if gfw.world.count_at(gfw.layer.player) > 0:
             #self.player = gfw.world.object(gfw.layer.player, 0)
+
+
         self.patrol_order = -1
         self.build_behavior_tree()
 
@@ -75,6 +78,13 @@ class Zombie:
         x,y = self.pos
         self.speed = 100
         self.update_position()
+
+        if self.ball != None:
+            collides = gobj.collides_box(self, self.ball)
+            if collides:
+                self.action = 'Dead'
+                self.time = 0
+
         for (px, py) in self.PAT_POSITIONS:
             dsq = (px-x)**2 + (py- y)**2
             if dsq < Zombie.CHASE_DISTANCE_SQ ** 2:
@@ -159,6 +169,8 @@ class Zombie:
         return images
 
     def update(self):
+        if gfw.world.count_at(gfw.layer.ball) > 0:
+            self.ball = gfw.world.object(gfw.layer.ball, 0)
         self.bt.run()
 
     def update_position(self):

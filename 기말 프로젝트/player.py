@@ -37,10 +37,9 @@ class IdleState:
         self.fidx = int(frame) % 8
 
     def fire(self):
-        self.ball = Ball(self.player.pos, (5,5))
-        Ball.balls.append(self.ball)
-        #gfw.world.add(gfw.layer.ball, ball)
-        print('Ball count = %d' % len(Ball.balls))
+        self.ball = Ball(self.player.pos, (5, 5))
+        gfw.world.add(gfw.layer.ball, self.ball)
+        #print('Ball count = %d' % len(Ball.balls))
 
     def handle_event(self, e):
         pair = (e.type, e.key)
@@ -87,10 +86,9 @@ class IdleState_L:
         self.fidx = int(frame) % 8
 
     def L_fire(self):
-        self.ball = Ball_L(self.player.pos, (5,5))
-        Ball_L.balls.append(self.ball)
-        #gfw.world.add(gfw.layer.ball, ball)
-        print('Ball_L count = %d' % len(Ball_L.balls))
+        self.ball_L = Ball_L(self.player.pos, (5, 5))
+        gfw.world.add(gfw.layer.ball, self.ball_L)
+
 
     def handle_event(self, e):
         pair = (e.type, e.key)
@@ -137,9 +135,9 @@ class Rightrun:
 
     def fire(self):
         self.ball = Ball(self.player.pos, (5,5))
-        Ball.balls.append(self.ball)
-        #gfw.world.add(gfw.layer.ball, ball)
-        print('Ball count = %d' % len(Ball.balls))
+        gfw.world.add(gfw.layer.ball, self.ball)
+        #Ball.balls.append(self.ball)
+        #print('Ball count = %d' % len(Ball.balls))
 
     def handle_event(self, e):
         pair = (e.type, e.key)
@@ -186,10 +184,8 @@ class Leftrun:
         self.fidx = int(frame) % 6
 
     def L_fire(self):
-        self.ball = Ball_L(self.player.pos, (5,5))
-        Ball_L.balls.append(self.ball)
-        #gfw.world.add(gfw.layer.ball, ball)
-        print('Ball_L count = %d' % len(Ball_L.balls))
+        self.ball_L = Ball_L(self.player.pos, (5, 5))
+        gfw.world.add(gfw.layer.ball, self.ball_L)
 
     def handle_event(self, e):
         pair = (e.type, e.key)
