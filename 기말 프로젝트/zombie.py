@@ -133,8 +133,11 @@ class Zombie:
             return BehaviorTree.FAIL
         self.time += gfw.delta_time
         self.fidx = round(self.time * Zombie.FPS)
+        gfw.world.remove(self.ball)
         if self.fidx >= len(self.images['Dead']):
             self.remove()
+
+
 
         return BehaviorTree.SUCCESS
 
