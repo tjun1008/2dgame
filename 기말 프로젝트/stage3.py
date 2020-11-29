@@ -1,6 +1,7 @@
 from pico2d import *
 from gobj import *
 import gfw
+from monster2 import Monster2
 
 class Stage3:
     def __init__(self):
@@ -8,6 +9,10 @@ class Stage3:
         portal = Portal3()
         background = load_image('image/background1.png')
         grass = Grass()
+        Monster2.load_all_images()
+        global zombie_time
+
+        zombie_time = 4
 
     def draw(self):
         background.draw(640, 360)
@@ -15,7 +20,12 @@ class Stage3:
         portal.draw()
 
     def update(self):
-        pass
+        global zombie_time
+        # zombie_time -= gfw.delta_time
+        zombie_time -= 1
+
+        if zombie_time >= 0:
+            gfw.world.add(gfw.layer.monster, Monster2())
 
 
 

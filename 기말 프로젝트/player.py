@@ -32,6 +32,7 @@ class IdleState:
         self.time += gfw.delta_time
         # self.player.pos = point_add(self.player.pos, self.player.delta)
         move_obj(self.player)
+        self.player.pos = point_add(self.player.pos, self.player.delta)
         frame = self.time * 15
        # self.fidx = int(frame) % 5
         self.fidx = int(frame) % 8
@@ -79,8 +80,8 @@ class IdleState_L:
 
     def update(self):
         self.time += gfw.delta_time
-        # self.player.pos = point_add(self.player.pos, self.player.delta)
         move_obj(self.player)
+        self.player.pos = point_add(self.player.pos, self.player.delta)
         frame = self.time * 15
        # self.fidx = int(frame) % 5
         self.fidx = int(frame) % 8
@@ -130,6 +131,7 @@ class Rightrun:
     def update(self):
         self.time += gfw.delta_time
         move_obj(self.player)
+        self.player.pos = point_add(self.player.pos, self.player.delta)
         frame = self.time * 15
         self.fidx = int(frame) % 6
 
@@ -180,6 +182,7 @@ class Leftrun:
     def update(self):
         self.time += gfw.delta_time
         move_obj(self.player)
+        self.player.pos = point_add(self.player.pos, self.player.delta)
         frame = self.time * 15
         self.fidx = int(frame) % 6
 
@@ -227,7 +230,7 @@ class Up:
 
     def update(self):
         self.time += gfw.delta_time
-        # self.player.pos = point_add(self.player.pos, self.player.delta)
+        self.player.pos = point_add(self.player.pos, self.player.delta)
         move_obj(self.player)
         frame = self.time * 15
        # self.fidx = int(frame) % 5
