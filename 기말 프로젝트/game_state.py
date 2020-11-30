@@ -9,12 +9,14 @@ from stage2 import  Stage2,Portal2
 from stage3 import  Stage3,Portal3
 from stage4 import  Stage4,Portal4
 from stage5 import  Stage5
+from boss_monster import  Boss_monster
 
-
+STATE_IN_GAME,STATE_GAME_OVER = range(2)
 
 def enter():
     gfw.world.init(['bg', 'monster', 'ball', 'player','portal','ui'])
     global player,stage1,stage2,stage3,stage4,stage5,portal1,portal2,portal3,portal4
+    global image,state
     portal1 = Portal1()
     portal2 = Portal2()
     portal3 = Portal3()
@@ -31,14 +33,18 @@ def enter():
     player = Player()
     gfw.world.add(gfw.layer.player,player)
 
+    image = load_image('image/clear.png')
+
     global map
     map = 1
 
+    state = STATE_IN_GAME
     #global zombie_time
-    #zombie_time = 1
+    #zombie_time = 2
 
 def update():
-    global stage1,stage2,stage3,stage4,map
+    global stage1,stage2,stage3,stage4,stage5,map
+    global state
     gfw.world.update()
     #player.update()
     #for b in Ball.balls: b.update()
@@ -77,12 +83,32 @@ def update():
             map += 1
             print(map)
 
+    if map ==5:
+        stage5.update()
+        if Boss_monster.finish == True:
+            del (stage5)
+            end_game()
+            map +=1
+
+
+    #global zombie_time
+    #zombie_time -= 1
+
+    #if zombie_time >= 0:
+        #gfw.world.add(gfw.layer.monster, Boss_monster())
 
 
 
+def end_game():
+    global state
+    print('Dead')
+    gfw.world.remove(player)
+    state = STATE_GAME_OVER
 
 
 def draw():
+    global state
+    global image
 
     if(map == 1):
         stage1.draw()
@@ -94,6 +120,9 @@ def draw():
         stage4.draw()
     elif map == 5:
         stage5.draw()
+
+    if state == STATE_GAME_OVER:
+        image.draw(640,360)
 
     #for b in Ball.balls: b.draw()
     #for b in Ball_L.balls: b.draw()

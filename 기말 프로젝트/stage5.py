@@ -1,5 +1,6 @@
 from pico2d import *
 from gobj import *
+from boss_monster import  Boss_monster
 import gfw
 
 
@@ -9,6 +10,9 @@ class Stage5:
         background = load_image('image/background1.png')
         grass = Grass()
 
+        global zombie_time
+        zombie_time = 1
+
 
 
     def draw(self):
@@ -16,7 +20,11 @@ class Stage5:
         grass.draw()
 
     def update(self):
-        pass
+        global zombie_time
+        zombie_time -= 1
+
+        if zombie_time >= 0:
+            gfw.world.add(gfw.layer.monster, Boss_monster())
 
 
 

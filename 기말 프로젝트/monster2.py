@@ -82,6 +82,7 @@ class Monster2:
         if self.ball != None:
             collides = gobj.collides_box(self, self.ball)
             if collides:
+                gfw.world.remove(self.ball)
                 self.action = 'Dead'
                 self.time = 0
 
@@ -133,7 +134,7 @@ class Monster2:
             return BehaviorTree.FAIL
         self.time += gfw.delta_time
         self.fidx = round(self.time * Monster2.FPS)
-        gfw.world.remove(self.ball)
+
         if self.fidx >= len(self.images['Dead']):
             self.remove()
 

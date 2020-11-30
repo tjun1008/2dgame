@@ -11,6 +11,7 @@ class Monster:
     IDLE_INTERVAL = 2.0
     images = {}
     FPS = 12
+    cc = []
     # FCOUNT = 10
     def __init__(self):
 
@@ -81,9 +82,27 @@ class Monster:
 
         if self.ball != None:
             collides = gobj.collides_box(self, self.ball)
+
             if collides:
-                self.action = 'Dead'
-                self.time = 0
+                gfw.world.remove(self.ball)
+                self.ball = None
+                Monster.cc.append((x,y))
+
+                if len(Monster.cc) ==1:
+                    self.action = 'Dead'
+                    self.time = 0
+                else:
+                    self.ball = None
+                    for (a, b) in Monster.cc:
+                        if (a, b) != (x, y):
+                            self.action = 'Dead'
+                            self.time = 0
+                print(Monster.cc)
+
+
+
+
+
 
         for (px, py) in self.PAT_POSITIONS:
             dsq = (px-x)**2 + (py- y)**2
@@ -133,9 +152,10 @@ class Monster:
             return BehaviorTree.FAIL
         self.time += gfw.delta_time
         self.fidx = round(self.time * Monster.FPS)
-        gfw.world.remove(self.ball)
+
         if self.fidx >= len(self.images['Dead']):
             self.remove()
+
 
 
 

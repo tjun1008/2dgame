@@ -4,47 +4,42 @@ import gfw
 import gobj
 from BehaviorTree import BehaviorTree, SelectorNode, LeafNode
 
-class Zombie:
 
-    ACTIONS = ['Attack', 'Dead', 'Idle', 'Walk']
+class Boss_monster:
+    ACTIONS = ['Dead', 'Idle', 'Walk']
     CHASE_DISTANCE_SQ = 250 ** 2
     IDLE_INTERVAL = 2.0
     images = {}
     FPS = 12
+    count = 0
+    finish = False
+    cc = []
+
     # FCOUNT = 10
     def __init__(self):
 
-        n = random.randint(0, 1)
 
-        if n == 0:
-            self.PAT_POSITIONS = [(480, 350), (960, 350)]
-        else:
-            self.PAT_POSITIONS = [(0, 100), (1200, 100)]
+        self.PAT_POSITIONS = [(0, 150), (1200, 250)]
 
-        print(n)
 
-        if len(Zombie.images) == 0:
-            Zombie.load_all_images()
+        if len(Boss_monster.images) == 0:
+            Boss_monster.load_all_images()
 
-        if n == 0:
-            self.pos = (random.randint(480,960),350)
-        else:
-            self.pos = (random.randint(0,1100),100)
 
+        self.pos = (random.randint(300, 1200), 250)
 
 
         self.delta = 0.1, 0.1
         # self.find_nearest_pos()
-        self.char = random.choice(['male', 'female'])
-        self.images = Zombie.load_images(self.char)
+        self.char = 'sprites'
+        self.images = Boss_monster.load_images(self.char)
         self.action = 'Idle'
         self.speed = random.randint(100, 150)
         self.fidx = 0
         self.time = 0
         self.ball = None
-        #if gfw.world.count_at(gfw.layer.player) > 0:
-            #self.player = gfw.world.object(gfw.layer.player, 0)
-
+        # if gfw.world.count_at(gfw.layer.player) > 0:
+        # self.player = gfw.world.object(gfw.layer.player, 0)
 
         self.patrol_order = -1
         self.build_behavior_tree()
@@ -55,7 +50,7 @@ class Zombie:
         index = 0
         nearest_index = 0
         for (px, py) in self.PAT_POSITIONS:
-            dsq = (x-px)**2 + (y-py)**2
+            dsq = (x - px) ** 2 + (y - py) ** 2
             # print(':', index, (x,y), '-', (px, py), dsq)
             if nearest_dsq > dsq:
                 nearest_dsq = dsq
@@ -75,19 +70,27 @@ class Zombie:
         return BehaviorTree.SUCCESS
 
     def move_to_target(self):
-        x,y = self.pos
+        x, y = self.pos
         self.speed = 100
         self.update_position()
 
         if self.ball != None:
             collides = gobj.collides_box(self, self.ball)
+
             if collides:
-                self.action = 'Dead'
-                self.time = 0
+                gfw.world.remove(self.ball)
+                self.ball = None
+                Boss_monster.cc.append((x, y))
+
+                if len(Boss_monster.cc) == 5:
+                    self.action = 'Dead'
+                    self.time = 0
+                print(Boss_monster.cc)
+
 
         for (px, py) in self.PAT_POSITIONS:
-            dsq = (px-x)**2 + (py- y)**2
-            if dsq < Zombie.CHASE_DISTANCE_SQ ** 2:
+            dsq = (px - x) ** 2 + (py - y) ** 2
+            if dsq < Boss_monster.CHASE_DISTANCE_SQ ** 2:
                 return BehaviorTree.SUCCESS
             else:
                 return BehaviorTree.RUNNING
@@ -106,24 +109,22 @@ class Zombie:
         return BehaviorTree.SUCCESS
 
     def set_target(self, target):
-        x,y = self.pos
-        tx,ty = target
+        x, y = self.pos
+        tx, ty = target
         dx, dy = tx - x, ty - y
-        distance = math.sqrt(dx**2 + dy**2)
+        distance = math.sqrt(dx ** 2 + dy ** 2)
         if distance == 0: return
 
         self.target = target
         self.delta = dx / distance, dy / distance
         # print(x,y, tx,ty, dx,dy, '/',distance, dx/distance, dy/distance, 'target=', self.target, ' delta=', self.delta)
 
-
-
     def do_idle(self):
         if self.action != 'Idle':
             return BehaviorTree.FAIL
         self.time += gfw.delta_time
-        self.fidx = round(self.time * Zombie.FPS)
-        if self.time >= Zombie.IDLE_INTERVAL:
+        self.fidx = round(self.time * Boss_monster.FPS)
+        if self.time >= Boss_monster.IDLE_INTERVAL:
             self.action = 'Walk'
             return BehaviorTree.FAIL
         return BehaviorTree.SUCCESS
@@ -132,42 +133,40 @@ class Zombie:
         if self.action != 'Dead':
             return BehaviorTree.FAIL
         self.time += gfw.delta_time
-        self.fidx = round(self.time * Zombie.FPS)
-        gfw.world.remove(self.ball)
+        self.fidx = round(self.time * Boss_monster.FPS)
         if self.fidx >= len(self.images['Dead']):
             self.remove()
-
-
+            Boss_monster.finish = True
 
         return BehaviorTree.SUCCESS
 
     @staticmethod
     def load_all_images():
-        Zombie.load_images('male')
-        Zombie.load_images('female')
-        # Zombie.font = gfw.font.load(gobj.RES_DIR + '/ENCR10B.TTF', 20)
+        Boss_monster.load_images('male')
+        Boss_monster.load_images('female')
+        # Boss_monster.font = gfw.font.load(gobj.RES_DIR + '/ENCR10B.TTF', 20)
 
     @staticmethod
     def load_images(char):
-        if char in Zombie.images:
-            return Zombie.images[char]
+        if char in Boss_monster.images:
+            return Boss_monster.images[char]
 
         images = {}
         count = 0
-        file_fmt = '%s/zombiefiles/%s/%s (%d).png'
-        for action in Zombie.ACTIONS:
+        file_fmt = '%s/walking_little_monster_sprites/%s/w_%d.png'
+        for action in Boss_monster.ACTIONS:
             action_images = []
             n = 0
             while True:
                 n += 1
-                fn = file_fmt % (gobj.RES_DIR, char, action, n)
+                fn = file_fmt % (gobj.RES_DIR, char, n)
                 if os.path.isfile(fn):
                     action_images.append(gfw.image.load(fn))
                 else:
                     break
                 count += 1
             images[action] = action_images
-        Zombie.images[char] = images
+        Boss_monster.images[char] = images
         print('%d images loaded for %s' % (count, char))
         return images
 
@@ -178,17 +177,17 @@ class Zombie:
 
     def update_position(self):
         self.time += gfw.delta_time
-        self.fidx = round(self.time * Zombie.FPS)
+        self.fidx = round(self.time * Boss_monster.FPS)
 
-        x,y = self.pos
-        dx,dy = self.delta
+        x, y = self.pos
+        dx, dy = self.delta
         x += dx * self.speed * gfw.delta_time
         y += dy * self.speed * gfw.delta_time
 
         # print(self.pos, self.delta, self.target, x, y, dx, dy)
 
         done = False
-        tx,ty = self.target
+        tx, ty = self.target
         if dx > 0 and x >= tx or dx < 0 and x <= tx:
             x = tx
             done = True
@@ -196,7 +195,7 @@ class Zombie:
             y = ty
             done = True
 
-        self.pos = x,y
+        self.pos = x, y
 
         return done
 
@@ -207,12 +206,12 @@ class Zombie:
         images = self.images[self.action]
         image = images[self.fidx % len(images)]
         flip = 'h' if self.delta[0] < 0 else ''
-        image.composite_draw(0, flip, *self.pos, image.w // 5, image.h // 5)
+        image.composite_draw(0, flip, *self.pos, image.w*2.5 , image.h*2.5)
         # x,y = self.pos
-        # Zombie.font.draw(x-40, y+50, self.action + str(round(self.time * 100) / 100))
+        # Boss_monster.font.draw(x-40, y+50, self.action + str(round(self.time * 100) / 100))
 
     def get_bb(self):
-        x,y = self.pos
+        x, y = self.pos
         return x - 40, y - 50, x + 40, y + 40
 
     def __getstate__(self):
@@ -224,7 +223,7 @@ class Zombie:
     def __setstate__(self, dict):
         # self.__init__()
         self.__dict__.update(dict)
-        self.images = Zombie.load_images(self.char)
+        self.images = Boss_monster.load_images(self.char)
 
     def build_behavior_tree(self):
         # node_gnp = LeafNode("Get Next Position", self.set_patrol_target)
