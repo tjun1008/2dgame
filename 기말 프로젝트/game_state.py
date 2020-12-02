@@ -17,7 +17,7 @@ from monster3 import  Monster3
 STATE_IN_GAME,STATE_GAME_OVER,STATE_GAME_CLEAR = range(3)
 
 def enter():
-    gfw.world.init(['bg', 'monster', 'ball', 'player','portal','ui'])
+    gfw.world.init(['bg', 'monster', 'ball', 'player','portal','ui','item'])
     global player,stage1,stage2,stage3,stage4,stage5,portal1,portal2,portal3,portal4
     global image,image1,state
     portal1 = Portal1()

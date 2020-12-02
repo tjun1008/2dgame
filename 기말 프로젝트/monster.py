@@ -3,6 +3,7 @@ from pico2d import *
 import gfw
 import gobj
 from BehaviorTree import BehaviorTree, SelectorNode, LeafNode
+from item import Item
 
 class Monster:
 
@@ -17,6 +18,7 @@ class Monster:
     def __init__(self):
 
         n = random.randint(0, 1)
+
 
         if n == 0:
             self.PAT_POSITIONS = [(480, 350), (960, 350)]
@@ -43,6 +45,7 @@ class Monster:
         self.speed = random.randint(100, 150)
         self.fidx = 0
         self.time = 0
+        self.item = 0
         self.ball = None
         if gfw.world.count_at(gfw.layer.player) > 0:
             self.player = gfw.world.object(gfw.layer.player, 0)
@@ -157,6 +160,7 @@ class Monster:
         return BehaviorTree.SUCCESS
 
     def do_dead(self):
+        x, y = self.pos
         if self.action != 'Dead':
             return BehaviorTree.FAIL
         self.time += gfw.delta_time
@@ -164,6 +168,16 @@ class Monster:
 
         if self.fidx >= len(self.images['Dead']):
             self.remove()
+
+            self.itemnum = random.randint(0, 2)
+
+            print(self.itemnum )
+            self.item = Item(self.itemnum , x, y)
+            gfw.world.add(gfw.layer.item, self.item)
+
+
+
+
 
 
 
@@ -237,6 +251,7 @@ class Monster:
         image = images[self.fidx % len(images)]
         flip = 'h' if self.delta[0] < 0 else ''
         image.composite_draw(0, flip, *self.pos, image.w // 5, image.h // 5)
+
         # x,y = self.pos
         # Monster.font.draw(x-40, y+50, self.action + str(round(self.time * 100) / 100))
 
