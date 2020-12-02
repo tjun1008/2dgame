@@ -263,6 +263,7 @@ class Player:
     }
     KEYDOWN_SPACE = (SDL_KEYDOWN, SDLK_SPACE)
     image = None
+    MAX_LIFE = 5
 
     #constructor
     def __init__(self):
@@ -277,6 +278,11 @@ class Player:
         #self.firestate = False
         self.state = None
         self.set_state(IdleState)
+        self.health_full = gfw.image.load(RES_DIR + '/health_full.png')
+        self.health_empty = gfw.image.load(RES_DIR + '/health_empty.png')
+
+        global life
+        life = Player.MAX_LIFE
 
     def set_state(self, clazz):
         if self.state != None:
@@ -286,6 +292,13 @@ class Player:
 
     def draw(self):
         self.state.draw()
+
+        x, y = 30, get_canvas_height() - 30
+
+        for i in range(Player.MAX_LIFE):
+            self.health = self.health_full if i < life else self.health_empty
+            self.health.draw(x, y,50,50)
+            x += self.health.w-450
 
 
     def update(self):
@@ -300,4 +313,9 @@ class Player:
         hh = 40
         x, y = self.pos
         return x - hw, y - hh, x + hw, y + hh
+
+    def decrease_life(self):
+        global life
+        life -= 1
+        return life <= 0
 

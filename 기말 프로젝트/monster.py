@@ -12,6 +12,7 @@ class Monster:
     images = {}
     FPS = 12
     cc = []
+    Over = False
     # FCOUNT = 10
     def __init__(self):
 
@@ -43,8 +44,8 @@ class Monster:
         self.fidx = 0
         self.time = 0
         self.ball = None
-        #if gfw.world.count_at(gfw.layer.player) > 0:
-            #self.player = gfw.world.object(gfw.layer.player, 0)
+        if gfw.world.count_at(gfw.layer.player) > 0:
+            self.player = gfw.world.object(gfw.layer.player, 0)
 
 
         self.patrol_order = -1
@@ -99,8 +100,16 @@ class Monster:
                             self.time = 0
                 print(Monster.cc)
 
+        collides = gobj.collides_box(self, self.player)
+        if collides:
+            #print("충돌")
+            dead = self.player.decrease_life()
+            if dead:
+                Monster.Over = True
+                self.remove()
 
-
+        if Monster.Over == True:
+            self.remove()
 
 
 

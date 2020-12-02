@@ -11,6 +11,7 @@ class Monster2:
     IDLE_INTERVAL = 2.0
     images = {}
     FPS = 12
+    Over = False
     # FCOUNT = 10
     def __init__(self):
 
@@ -42,8 +43,8 @@ class Monster2:
         self.fidx = 0
         self.time = 0
         self.ball = None
-        #if gfw.world.count_at(gfw.layer.player) > 0:
-            #self.player = gfw.world.object(gfw.layer.player, 0)
+        if gfw.world.count_at(gfw.layer.player) > 0:
+            self.player = gfw.world.object(gfw.layer.player, 0)
 
 
         self.patrol_order = -1
@@ -81,10 +82,33 @@ class Monster2:
 
         if self.ball != None:
             collides = gobj.collides_box(self, self.ball)
+
             if collides:
                 gfw.world.remove(self.ball)
-                self.action = 'Dead'
-                self.time = 0
+                self.ball = None
+                Monster2.cc.append((x,y))
+
+                if len(Monster2.cc) ==1:
+                    self.action = 'Dead'
+                    self.time = 0
+                else:
+                    self.ball = None
+                    for (a, b) in Monster2.cc:
+                        if (a, b) != (x, y):
+                            self.action = 'Dead'
+                            self.time = 0
+                print(Monster2.cc)
+
+        collides = gobj.collides_box(self, self.player)
+        if collides:
+            #print("충돌")
+            dead = self.player.decrease_life()
+            if dead:
+                Monster2.Over = True
+                self.remove()
+
+        if Monster2.Over == True:
+            self.remove()
 
         for (px, py) in self.PAT_POSITIONS:
             dsq = (px-x)**2 + (py- y)**2
