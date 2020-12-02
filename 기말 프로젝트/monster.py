@@ -45,7 +45,7 @@ class Monster:
         self.speed = random.randint(100, 150)
         self.fidx = 0
         self.time = 0
-        self.item = 0
+        #self.item = None
         self.ball = None
         if gfw.world.count_at(gfw.layer.player) > 0:
             self.player = gfw.world.object(gfw.layer.player, 0)
@@ -171,9 +171,13 @@ class Monster:
 
             self.itemnum = random.randint(0, 2)
 
-            print(self.itemnum )
+            #print(self.itemnum )
             self.item = Item(self.itemnum , x, y)
             gfw.world.add(gfw.layer.item, self.item)
+
+            print("개수 확인")
+            print(gfw.world.count_at(gfw.layer.item))
+
 
 
 
@@ -217,7 +221,33 @@ class Monster:
     def update(self):
         if gfw.world.count_at(gfw.layer.ball) > 0:
             self.ball = gfw.world.object(gfw.layer.ball, 0)
+
+        #if gfw.world.count_at(gfw.layer.item) > 0:
+            #self.item = gfw.world.object(gfw.layer.item, 0)
+
         self.bt.run()
+        #if gfw.world.count_at(gfw.layer.item)>0:
+            #print("확인1")
+        for it in gfw.world.objects_at(gfw.layer.item):
+            print("개수 확인1")
+            print(gfw.world.count_at(gfw.layer.item))
+            if gobj.collides_box(self.player, it):
+                print(it.item)
+                if it.item == 1:
+                    self.player.MAX_LIFE += 1
+                    gfw.world.remove(it)
+                if it.item == 2:
+                    print("아이템2")
+                    gfw.world.remove(it)
+            break
+
+        #좀비 다 죽으면 작동 안함
+
+
+
+
+
+
 
     def update_position(self):
         self.time += gfw.delta_time

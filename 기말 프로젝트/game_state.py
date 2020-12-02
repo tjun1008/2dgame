@@ -13,6 +13,7 @@ from boss_monster import  Boss_monster
 from monster import  Monster
 from monster2 import  Monster2
 from monster3 import  Monster3
+from item import Item
 
 STATE_IN_GAME,STATE_GAME_OVER,STATE_GAME_CLEAR = range(3)
 
@@ -31,7 +32,6 @@ def enter():
     stage3 = Stage3()
     stage4 = Stage4()
     stage5 = Stage5()
-
 
     player = Player()
     gfw.world.add(gfw.layer.player,player)
@@ -96,6 +96,7 @@ def update():
             del (stage5)
             clear_game()
             map +=1
+
 
 
     #global zombie_time
