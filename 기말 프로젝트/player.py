@@ -31,8 +31,8 @@ class IdleState:
     def update(self):
         self.time += gfw.delta_time
         # self.player.pos = point_add(self.player.pos, self.player.delta)
-        move_obj(self.player)
-        self.player.pos = point_add(self.player.pos, self.player.delta)
+        #move_obj(self.player)
+        #self.player.pos = point_add(self.player.pos, self.player.delta)
         frame = self.time * 15
        # self.fidx = int(frame) % 5
         self.fidx = int(frame) % 8
@@ -80,8 +80,8 @@ class IdleState_L:
 
     def update(self):
         self.time += gfw.delta_time
-        move_obj(self.player)
-        self.player.pos = point_add(self.player.pos, self.player.delta)
+        #move_obj(self.player)
+        #self.player.pos = point_add(self.player.pos, self.player.delta)
         frame = self.time * 15
        # self.fidx = int(frame) % 5
         self.fidx = int(frame) % 8
@@ -130,10 +130,15 @@ class Rightrun:
 
     def update(self):
         self.time += gfw.delta_time
-        move_obj(self.player)
-        self.player.pos = point_add(self.player.pos, self.player.delta)
+        self.x, self.y = self.player.pos
+        if (self.x > 1150):
+            pass
+        else:
+            move_obj(self.player)
+            self.player.pos = point_add(self.player.pos, self.player.delta)
         frame = self.time * 15
         self.fidx = int(frame) % 6
+
 
     def fire(self):
         self.ball = Ball(self.player.pos, (5,5))
@@ -181,10 +186,15 @@ class Leftrun:
 
     def update(self):
         self.time += gfw.delta_time
-        move_obj(self.player)
-        self.player.pos = point_add(self.player.pos, self.player.delta)
+        self.x, self.y = self.player.pos
+        if (self.x < 50):
+            pass
+        else:
+            move_obj(self.player)
+            self.player.pos = point_add(self.player.pos, self.player.delta)
         frame = self.time * 15
         self.fidx = int(frame) % 6
+
 
     def L_fire(self):
         self.ball_L = Ball_L(self.player.pos, (5, 5))
@@ -218,6 +228,7 @@ class Up:
     def __init__(self):
         self.image = gfw.image.load(RES_DIR + '/Magic_Girl_Walk_up_animation.png')
 
+
     def enter(self):
         self.time = 0
         self.fidx = 0
@@ -230,10 +241,13 @@ class Up:
 
     def update(self):
         self.time += gfw.delta_time
-        self.player.pos = point_add(self.player.pos, self.player.delta)
-        move_obj(self.player)
+        self.x, self.y = self.player.pos
+        if (self.y > 700 or self.y<110):
+            pass
+        else:
+            self.player.pos = point_add(self.player.pos, self.player.delta)
+            move_obj(self.player)
         frame = self.time * 15
-       # self.fidx = int(frame) % 5
         self.fidx = int(frame) % 8
 
 
@@ -263,7 +277,7 @@ class Player:
     }
     KEYDOWN_SPACE = (SDL_KEYDOWN, SDLK_SPACE)
     image = None
-    MAX_LIFE = 5
+    MAX_LIFE = 10
 
     #constructor
     def __init__(self):
@@ -280,9 +294,9 @@ class Player:
         self.set_state(IdleState)
         self.health_full = gfw.image.load(RES_DIR + '/health_full.png')
         self.health_empty = gfw.image.load(RES_DIR + '/health_empty.png')
+        self.x, self.y = self.pos
 
-        global life
-        life = Player.MAX_LIFE
+        self.life = 5
 
     def set_state(self, clazz):
         if self.state != None:
@@ -296,13 +310,15 @@ class Player:
         x, y = 30, get_canvas_height() - 30
 
         for i in range(Player.MAX_LIFE):
-            self.health = self.health_full if i < life else self.health_empty
+            self.health = self.health_full if i < self.life else self.health_empty
             self.health.draw(x, y,50,50)
             x += self.health.w-450
 
 
     def update(self):
         self.state.update()
+
+
 
 
     def handle_event(self, e):

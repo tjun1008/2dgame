@@ -3,6 +3,7 @@ from pico2d import *
 import gfw
 import gobj
 from BehaviorTree import BehaviorTree, SelectorNode, LeafNode
+from item import Item
 
 class Monster2:
 
@@ -12,6 +13,7 @@ class Monster2:
     images = {}
     FPS = 12
     Over = False
+    cc = []
     # FCOUNT = 10
     def __init__(self):
 
@@ -154,6 +156,7 @@ class Monster2:
         return BehaviorTree.SUCCESS
 
     def do_dead(self):
+        x, y = self.pos
         if self.action != 'Dead':
             return BehaviorTree.FAIL
         self.time += gfw.delta_time
@@ -161,6 +164,15 @@ class Monster2:
 
         if self.fidx >= len(self.images['Dead']):
             self.remove()
+
+            self.itemnum = random.randint(0, 2)
+
+            #print(self.itemnum )
+            self.item = Item(self.itemnum , x, y)
+            gfw.world.add(gfw.layer.item2, self.item)
+
+            print("개수 확인")
+            print(gfw.world.count_at(gfw.layer.item2))
 
 
 
@@ -200,6 +212,23 @@ class Monster2:
         if gfw.world.count_at(gfw.layer.ball) > 0:
             self.ball = gfw.world.object(gfw.layer.ball, 0)
         self.bt.run()
+
+        #if gfw.world.count_at(gfw.layer.item)>0:
+            #print("확인1")
+        for it in gfw.world.objects_at(gfw.layer.item2):
+            print("개수 확인2")
+            print(gfw.world.count_at(gfw.layer.item2))
+            if gobj.collides_box(self.player, it):
+                print(it.item)
+                if it.item == 1:
+                    self.player.life += 1
+                    gfw.world.remove(it)
+                if it.item == 2:
+                    print("아이템2")
+                    gfw.world.remove(it)
+            break
+
+        #좀비 다 죽으면 작동 안함
 
     def update_position(self):
         self.time += gfw.delta_time

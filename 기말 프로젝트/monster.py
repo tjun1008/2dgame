@@ -234,7 +234,7 @@ class Monster:
             if gobj.collides_box(self.player, it):
                 print(it.item)
                 if it.item == 1:
-                    self.player.MAX_LIFE += 1
+                    self.player.life += 1
                     gfw.world.remove(it)
                 if it.item == 2:
                     print("아이템2")

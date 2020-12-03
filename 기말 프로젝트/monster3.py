@@ -3,6 +3,7 @@ from pico2d import *
 import gfw
 import gobj
 from BehaviorTree import BehaviorTree, SelectorNode, LeafNode
+from item import Item
 
 class Monster3:
 
@@ -12,6 +13,7 @@ class Monster3:
     images = {}
     FPS = 12
     Over = False
+    cc = []
     # FCOUNT = 10
     def __init__(self):
 
@@ -43,8 +45,6 @@ class Monster3:
             else:
                 self.pos = (random.randint(900,1100),370)
 
-
-
         self.delta = 0.1, 0.1
         # self.find_nearest_pos()
         self.char = random.choice(['male', 'female'])
@@ -53,10 +53,10 @@ class Monster3:
         self.speed = random.randint(100, 150)
         self.fidx = 0
         self.time = 0
+        # self.item = None
         self.ball = None
         if gfw.world.count_at(gfw.layer.player) > 0:
             self.player = gfw.world.object(gfw.layer.player, 0)
-
 
         self.patrol_order = -1
         self.build_behavior_tree()
@@ -165,12 +165,22 @@ class Monster3:
         return BehaviorTree.SUCCESS
 
     def do_dead(self):
+        x, y = self.pos
         if self.action != 'Dead':
             return BehaviorTree.FAIL
         self.time += gfw.delta_time
         self.fidx = round(self.time * Monster3.FPS)
         if self.fidx >= len(self.images['Dead']):
             self.remove()
+
+            self.itemnum = random.randint(0, 2)
+
+            # print(self.itemnum )
+            self.item = Item(self.itemnum, x, y)
+            gfw.world.add(gfw.layer.item3, self.item)
+
+            print("개수 확인")
+            print(gfw.world.count_at(gfw.layer.item3))
 
 
 
@@ -210,6 +220,21 @@ class Monster3:
         if gfw.world.count_at(gfw.layer.ball) > 0:
             self.ball = gfw.world.object(gfw.layer.ball, 0)
         self.bt.run()
+
+        for it in gfw.world.objects_at(gfw.layer.item3):
+            print("개수 확인3")
+            print(gfw.world.count_at(gfw.layer.item3))
+            if gobj.collides_box(self.player, it):
+                print(it.item)
+                if it.item == 1:
+                    self.player.life += 1
+                    gfw.world.remove(it)
+                if it.item == 2:
+                    print("아이템2")
+                    gfw.world.remove(it)
+            break
+
+        # 좀비 다 죽으면 작동 안함
 
     def update_position(self):
         self.time += gfw.delta_time
