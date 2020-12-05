@@ -14,11 +14,16 @@ class Monster:
     FPS = 12
     cc = []
     Over = False
+    Items= False
+    score =0
     # FCOUNT = 10
     def __init__(self):
 
         n = random.randint(0, 1)
 
+        global wav_item,wav_dead
+        wav_item = load_wav('image/Coin Up.wav')
+        wav_dead = load_wav('image/monster_dead.wav')
 
         if n == 0:
             self.PAT_POSITIONS = [(480, 350), (960, 350)]
@@ -85,11 +90,14 @@ class Monster:
         self.update_position()
 
         if self.ball != None:
+            print(gfw.world.count_at(gfw.layer.ball))
             collides = gobj.collides_box(self, self.ball)
 
-            if collides:
-                gfw.world.remove(self.ball)
-                self.ball = None
+            if collides and gfw.world.count_at(gfw.layer.ball)>0:
+                Monster.Items = True
+                print("뒤짐")
+                #gfw.world.remove(self.ball)
+                #self.ball = None
                 Monster.cc.append((x,y))
 
                 if len(Monster.cc) ==1:
@@ -101,15 +109,20 @@ class Monster:
                         if (a, b) != (x, y):
                             self.action = 'Dead'
                             self.time = 0
+
                 print(Monster.cc)
 
         collides = gobj.collides_box(self, self.player)
         if collides:
+            Monster.Items = False
             #print("충돌")
+
             dead = self.player.decrease_life()
             if dead:
                 Monster.Over = True
                 self.remove()
+
+            self.action = 'Dead'
 
         if Monster.Over == True:
             self.remove()
@@ -160,27 +173,33 @@ class Monster:
         return BehaviorTree.SUCCESS
 
     def do_dead(self):
+        global wav_dead
         x, y = self.pos
         if self.action != 'Dead':
             return BehaviorTree.FAIL
+        else:
+            gfw.world.remove(self.ball)
+
+
         self.time += gfw.delta_time
         self.fidx = round(self.time * Monster.FPS)
 
         if self.fidx >= len(self.images['Dead']):
+            Monster.score += 10
+            #1번
+            wav_dead.play()
             self.remove()
+            if Monster.Items == True:
+                self.itemnum = random.randint(0, 2)
 
-            self.itemnum = random.randint(0, 2)
+                # print(self.itemnum )
+                self.item = Item(self.itemnum, x, y)
+                gfw.world.add(gfw.layer.item, self.item)
 
-            #print(self.itemnum )
-            self.item = Item(self.itemnum , x, y)
-            gfw.world.add(gfw.layer.item, self.item)
+                #print("개수 확인")
+                #print(gfw.world.count_at(gfw.layer.item))
 
-            print("개수 확인")
-            print(gfw.world.count_at(gfw.layer.item))
-
-
-
-
+            #return BehaviorTree.FAIL
 
 
 
@@ -219,6 +238,8 @@ class Monster:
         return images
 
     def update(self):
+        global wav_item
+
         if gfw.world.count_at(gfw.layer.ball) > 0:
             self.ball = gfw.world.object(gfw.layer.ball, 0)
 
@@ -229,16 +250,18 @@ class Monster:
         #if gfw.world.count_at(gfw.layer.item)>0:
             #print("확인1")
         for it in gfw.world.objects_at(gfw.layer.item):
-            print("개수 확인1")
-            print(gfw.world.count_at(gfw.layer.item))
+            #print("개수 확인1")
+            #print(gfw.world.count_at(gfw.layer.item))
             if gobj.collides_box(self.player, it):
                 print(it.item)
                 if it.item == 1:
                     self.player.life += 1
                     gfw.world.remove(it)
+                    wav_item.play()
                 if it.item == 2:
-                    print("아이템2")
+                    Monster.score +=10
                     gfw.world.remove(it)
+                    wav_item.play()
             break
 
         #좀비 다 죽으면 작동 안함
@@ -329,8 +352,8 @@ class Monster:
                 },
 
                 {
-                    "name": "Move",
                     "class": LeafNode,
+                    "name": "Move",
                     "function": self.move_to_target,
                 },
 

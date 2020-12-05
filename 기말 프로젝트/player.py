@@ -38,8 +38,10 @@ class IdleState:
         self.fidx = int(frame) % 8
 
     def fire(self):
+        global wav_explosion
         self.ball = Ball(self.player.pos, (5, 5))
         gfw.world.add(gfw.layer.ball, self.ball)
+        wav_explosion.play()
         #print('Ball count = %d' % len(Ball.balls))
 
     def handle_event(self, e):
@@ -87,8 +89,10 @@ class IdleState_L:
         self.fidx = int(frame) % 8
 
     def L_fire(self):
+        global wav_explosion
         self.ball_L = Ball_L(self.player.pos, (5, 5))
         gfw.world.add(gfw.layer.ball, self.ball_L)
+        wav_explosion.play()
 
 
     def handle_event(self, e):
@@ -141,10 +145,10 @@ class Rightrun:
 
 
     def fire(self):
+        global wav_explosion
         self.ball = Ball(self.player.pos, (5,5))
         gfw.world.add(gfw.layer.ball, self.ball)
-        #Ball.balls.append(self.ball)
-        #print('Ball count = %d' % len(Ball.balls))
+        wav_explosion.play()
 
     def handle_event(self, e):
         pair = (e.type, e.key)
@@ -197,8 +201,10 @@ class Leftrun:
 
 
     def L_fire(self):
+        global wav_explosion
         self.ball_L = Ball_L(self.player.pos, (5, 5))
         gfw.world.add(gfw.layer.ball, self.ball_L)
+        wav_explosion.play()
 
     def handle_event(self, e):
         pair = (e.type, e.key)
@@ -242,7 +248,7 @@ class Up:
     def update(self):
         self.time += gfw.delta_time
         self.x, self.y = self.player.pos
-        if (self.y > 700 or self.y<110):
+        if (self.y > 700 or self.y<95):
             pass
         else:
             self.player.pos = point_add(self.player.pos, self.player.delta)
@@ -279,6 +285,8 @@ class Player:
     image = None
     MAX_LIFE = 10
 
+
+
     #constructor
     def __init__(self):
         # self.pos = get_canvas_width() // 2, get_canvas_height() // 2
@@ -295,6 +303,9 @@ class Player:
         self.health_full = gfw.image.load(RES_DIR + '/health_full.png')
         self.health_empty = gfw.image.load(RES_DIR + '/health_empty.png')
         self.x, self.y = self.pos
+        global wav_explosion
+        wav_explosion = load_wav('image/missile-05.wav')
+
 
         self.life = 5
 
@@ -331,7 +342,6 @@ class Player:
         return x - hw, y - hh, x + hw, y + hh
 
     def decrease_life(self):
-        global life
-        life -= 1
-        return life <= 0
+        self.life -= 1
+        return self.life <= 0
 

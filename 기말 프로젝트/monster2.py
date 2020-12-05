@@ -14,8 +14,13 @@ class Monster2:
     FPS = 12
     Over = False
     cc = []
+    score =0
     # FCOUNT = 10
     def __init__(self):
+
+        global wav_item,wav_dead
+        wav_item = load_wav('image/Coin Up.wav')
+        wav_dead = load_wav('image/monster_dead.wav')
 
         n = random.randint(0, 1)
 
@@ -156,6 +161,7 @@ class Monster2:
         return BehaviorTree.SUCCESS
 
     def do_dead(self):
+        global wav_dead
         x, y = self.pos
         if self.action != 'Dead':
             return BehaviorTree.FAIL
@@ -163,7 +169,10 @@ class Monster2:
         self.fidx = round(self.time * Monster2.FPS)
 
         if self.fidx >= len(self.images['Dead']):
+            wav_dead.play()
             self.remove()
+
+            Monster2.score +=10
 
             self.itemnum = random.randint(0, 2)
 
@@ -209,6 +218,8 @@ class Monster2:
         return images
 
     def update(self):
+
+        global wav_item
         if gfw.world.count_at(gfw.layer.ball) > 0:
             self.ball = gfw.world.object(gfw.layer.ball, 0)
         self.bt.run()
@@ -225,7 +236,9 @@ class Monster2:
                     gfw.world.remove(it)
                 if it.item == 2:
                     print("아이템2")
+                    Monster2.score +=10
                     gfw.world.remove(it)
+                wav_item.play()
             break
 
         #좀비 다 죽으면 작동 안함

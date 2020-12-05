@@ -18,7 +18,7 @@ from item import Item
 STATE_IN_GAME,STATE_GAME_OVER,STATE_GAME_CLEAR = range(3)
 
 def enter():
-    gfw.world.init(['monster', 'ball', 'player','portal','ui','item','item2','item3'])
+    gfw.world.init(['monster', 'ball', 'player','portal','item','item2','item3','ui','asd'])
     global player,stage1,stage2,stage3,stage4,stage5,portal1,portal2,portal3,portal4
     global image,image1,state
     portal1 = Portal1()
@@ -39,12 +39,24 @@ def enter():
     image = load_image('image/clear.png')
     image1 = load_image('image/gameover.png')
 
+    global font
+    font = gfw.font.load('image/ConsolaMalgun.ttf', 40)
+
+    global music_bg
+    music_bg = load_music('image/happy.mp3')
+
+
+    global score
+    score = 0
+
     global map
     map = 1
 
     state = STATE_IN_GAME
     #global zombie_time
     #zombie_time = 2
+
+    music_bg.repeat_play()
 
 def update():
     global stage1,stage2,stage3,stage4,stage5,map
@@ -63,6 +75,7 @@ def update():
 
     if Monster.Over == True or Monster2.Over == True or Monster3.Over == True:
         end_game()
+
 
 
 
@@ -97,7 +110,8 @@ def update():
             clear_game()
             map +=1
 
-
+    global score
+    score = Monster.score + Monster2.score + Monster3.score
 
     #global zombie_time
     #zombie_time -= 1
@@ -108,13 +122,17 @@ def update():
 
 def clear_game():
     global state
+    global music_bg
     print('Dead')
+    music_bg.stop()
     gfw.world.remove(player)
     state = STATE_GAME_CLEAR
 
 def end_game():
     global state
+    global music_bg
     print('Dead')
+    music_bg.stop()
     gfw.world.remove(player)
     state = STATE_GAME_OVER
 
@@ -144,6 +162,9 @@ def draw():
     #for b in Ball.balls: b.draw()
     #for b in Ball_L.balls: b.draw()
     #player.draw()
+    score_pos = 950, get_canvas_height() - 30
+
+    font.draw(*score_pos, 'Score: %d' %score, (255, 255, 255))
     gfw.world.draw()
 
 def handle_event(e):
@@ -158,7 +179,10 @@ def handle_event(e):
     player.handle_event(e)
 
 def exit():
-    pass
+    global music_bg, wav_item, wav_explosion
+    del music_bg
+    del wav_item
+    del wav_explosion
 
 if __name__ == '__main__':
     gfw.run_main()
