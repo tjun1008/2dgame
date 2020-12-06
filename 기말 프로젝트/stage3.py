@@ -2,12 +2,15 @@ from pico2d import *
 from gobj import *
 import gfw
 from monster2 import Monster2
+from background import HorzScrollBackground
 
 class Stage3:
     def __init__(self):
-        global grass,background, portal
+        global grass,bg, portal
         portal = Portal3()
-        background = load_image('image/background1.png')
+        for n, speed in [(1, 30)]:
+            bg = HorzScrollBackground('image/background1.png')
+            bg.speed = speed
         grass = Grass()
         Monster2.load_all_images()
         global zombie_time
@@ -15,11 +18,12 @@ class Stage3:
         zombie_time = 4
 
     def draw(self):
-        background.draw(640, 360)
+        bg.draw()
         grass.draw()
         portal.draw()
 
     def update(self):
+        bg.update()
         global zombie_time
         # zombie_time -= gfw.delta_time
         zombie_time -= 1

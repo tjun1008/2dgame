@@ -15,11 +15,12 @@ class Monster2:
     Over = False
     cc = []
     score =0
+    Items= False
     # FCOUNT = 10
     def __init__(self):
 
-        global wav_item,wav_dead
-        wav_item = load_wav('image/Coin Up.wav')
+        global wav_dead
+
         wav_dead = load_wav('image/monster_dead.wav')
 
         n = random.randint(0, 1)
@@ -90,7 +91,8 @@ class Monster2:
         if self.ball != None:
             collides = gobj.collides_box(self, self.ball)
 
-            if collides:
+            if collides and gfw.world.count_at(gfw.layer.ball)>0:
+                Monster2.Items = True
                 gfw.world.remove(self.ball)
                 self.ball = None
                 Monster2.cc.append((x,y))
@@ -108,8 +110,11 @@ class Monster2:
 
         collides = gobj.collides_box(self, self.player)
         if collides:
+            self.action = 'Dead'
+            Monster2.Items = False
             #print("충돌")
             dead = self.player.decrease_life()
+
             if dead:
                 Monster2.Over = True
                 self.remove()
@@ -173,15 +178,12 @@ class Monster2:
             self.remove()
 
             Monster2.score +=10
-
-            self.itemnum = random.randint(0, 2)
+            if Monster2.Items == True:
+                self.itemnum = random.randint(0, 2)
 
             #print(self.itemnum )
-            self.item = Item(self.itemnum , x, y)
-            gfw.world.add(gfw.layer.item2, self.item)
-
-            print("개수 확인")
-            print(gfw.world.count_at(gfw.layer.item2))
+                self.item = Item(self.itemnum , x, y)
+                gfw.world.add(gfw.layer.item2, self.item)
 
 
 
@@ -226,20 +228,7 @@ class Monster2:
 
         #if gfw.world.count_at(gfw.layer.item)>0:
             #print("확인1")
-        for it in gfw.world.objects_at(gfw.layer.item2):
-            print("개수 확인2")
-            print(gfw.world.count_at(gfw.layer.item2))
-            if gobj.collides_box(self.player, it):
-                print(it.item)
-                if it.item == 1:
-                    self.player.life += 1
-                    gfw.world.remove(it)
-                if it.item == 2:
-                    print("아이템2")
-                    Monster2.score +=10
-                    gfw.world.remove(it)
-                wav_item.play()
-            break
+
 
         #좀비 다 죽으면 작동 안함
 

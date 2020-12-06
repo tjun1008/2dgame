@@ -21,8 +21,7 @@ class Monster:
 
         n = random.randint(0, 1)
 
-        global wav_item,wav_dead
-        wav_item = load_wav('image/Coin Up.wav')
+        global wav_dead
         wav_dead = load_wav('image/monster_dead.wav')
 
         if n == 0:
@@ -114,15 +113,14 @@ class Monster:
 
         collides = gobj.collides_box(self, self.player)
         if collides:
+            self.action = 'Dead'
             Monster.Items = False
-            #print("충돌")
-
+            print("충돌")
             dead = self.player.decrease_life()
             if dead:
                 Monster.Over = True
                 self.remove()
 
-            self.action = 'Dead'
 
         if Monster.Over == True:
             self.remove()
@@ -204,9 +202,6 @@ class Monster:
 
 
 
-
-        return BehaviorTree.SUCCESS
-
     @staticmethod
     def load_all_images():
         Monster.load_images('male')
@@ -249,20 +244,7 @@ class Monster:
         self.bt.run()
         #if gfw.world.count_at(gfw.layer.item)>0:
             #print("확인1")
-        for it in gfw.world.objects_at(gfw.layer.item):
-            #print("개수 확인1")
-            #print(gfw.world.count_at(gfw.layer.item))
-            if gobj.collides_box(self.player, it):
-                print(it.item)
-                if it.item == 1:
-                    self.player.life += 1
-                    gfw.world.remove(it)
-                    wav_item.play()
-                if it.item == 2:
-                    Monster.score +=10
-                    gfw.world.remove(it)
-                    wav_item.play()
-            break
+
 
         #좀비 다 죽으면 작동 안함
 

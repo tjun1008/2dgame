@@ -1,6 +1,7 @@
 from pico2d import *
 from gobj import *
 import gfw
+from player import Player
 
 
 class Stage1:
@@ -9,16 +10,21 @@ class Stage1:
         portal = Portal1()
         background = load_image('image/background.png')
         grass = Grass()
+        self.center = get_canvas_width() // 2, get_canvas_height() // 2
+
 
 
 
     def draw(self):
+
         background.draw(640, 360)
+        #background.draw(640, 360)
         grass.draw()
         portal.draw()
 
     def update(self):
         pass
+
 
 
 

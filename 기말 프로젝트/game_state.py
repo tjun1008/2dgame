@@ -18,7 +18,7 @@ from item import Item
 STATE_IN_GAME,STATE_GAME_OVER,STATE_GAME_CLEAR = range(3)
 
 def enter():
-    gfw.world.init(['monster', 'ball', 'player','portal','item','item2','item3','ui','asd'])
+    gfw.world.init(['bg','monster', 'ball', 'player','portal','item','item2','item3','ui','asd'])
     global player,stage1,stage2,stage3,stage4,stage5,portal1,portal2,portal3,portal4
     global image,image1,state
     portal1 = Portal1()
@@ -42,9 +42,9 @@ def enter():
     global font
     font = gfw.font.load('image/ConsolaMalgun.ttf', 40)
 
-    global music_bg
+    global music_bg, wav_item
     music_bg = load_music('image/happy.mp3')
-
+    wav_item = load_wav('image/Coin Up.wav')
 
     global score
     score = 0
@@ -55,6 +55,7 @@ def enter():
     state = STATE_IN_GAME
     #global zombie_time
     #zombie_time = 2
+
 
     music_bg.repeat_play()
 
@@ -76,11 +77,9 @@ def update():
     if Monster.Over == True or Monster2.Over == True or Monster3.Over == True:
         end_game()
 
-
-
-
     if map ==2:
         stage2.update()
+        get_item1()
         if collides_box(player, portal2):
             player.pos = 100, 110
             del (stage2)
@@ -89,6 +88,11 @@ def update():
 
     if map == 3:
         stage3.update()
+        get_item2()
+        if gfw.world.count_at(gfw.layer.monster) > 0:
+            Monster.remove(gfw.layer.monster)
+        if gfw.world.count_at(gfw.layer.item) > 0:
+            Monster.remove(gfw.layer.item)
         if collides_box(player, portal3):
             player.pos = 100, 110
             del (stage3)
@@ -97,6 +101,11 @@ def update():
 
     if map == 4:
         stage4.update()
+        get_item3()
+        if gfw.world.count_at(gfw.layer.item2) > 0:
+            Monster.remove(gfw.layer.item2)
+        if gfw.world.count_at(gfw.layer.monster) > 0:
+            Monster.remove(gfw.layer.monster)
         if collides_box(player, portal4):
             player.pos = 100, 110
             del (stage4)
@@ -105,6 +114,10 @@ def update():
 
     if map ==5:
         stage5.update()
+        if gfw.world.count_at(gfw.layer.item3) > 0:
+            Monster.remove(gfw.layer.item3)
+        if gfw.world.count_at(gfw.layer.monster) > 0:
+            Monster.remove(gfw.layer.monster)
         if Boss_monster.finish == True:
             del (stage5)
             clear_game()
@@ -118,6 +131,60 @@ def update():
 
     #if zombie_time >= 0:
         #gfw.world.add(gfw.layer.monster, Boss_monster())
+
+def get_item1():
+    for it in gfw.world.objects_at(gfw.layer.item):
+        print("개수 확인1")
+        print(gfw.world.count_at(gfw.layer.item))
+        if collides_box(player, it):
+            print(it.item)
+            if it.item == 0:
+                gfw.world.remove(it)
+            if it.item == 1:
+                player.life += 1
+                gfw.world.remove(it)
+                wav_item.play()
+            if it.item == 2:
+                Monster.score += 10
+                gfw.world.remove(it)
+                wav_item.play()
+        break
+
+def get_item2():
+    for it in gfw.world.objects_at(gfw.layer.item2):
+        # print("개수 확인1")
+        # print(gfw.world.count_at(gfw.layer.item))
+        if collides_box(player, it):
+            print(it.item)
+            if it.item == 0:
+                gfw.world.remove(it)
+            if it.item == 1:
+                player.life += 1
+                gfw.world.remove(it)
+                wav_item.play()
+            if it.item == 2:
+                Monster.score += 10
+                gfw.world.remove(it)
+                wav_item.play()
+        break
+
+def get_item3():
+    for it in gfw.world.objects_at(gfw.layer.item3):
+        # print("개수 확인1")
+        # print(gfw.world.count_at(gfw.layer.item))
+        if collides_box(player, it):
+            print(it.item)
+            if it.item == 0:
+                gfw.world.remove(it)
+            if it.item == 1:
+                player.life += 1
+                gfw.world.remove(it)
+                wav_item.play()
+            if it.item == 2:
+                Monster.score += 10
+                gfw.world.remove(it)
+                wav_item.play()
+        break
 
 
 def clear_game():
@@ -179,10 +246,10 @@ def handle_event(e):
     player.handle_event(e)
 
 def exit():
-    global music_bg, wav_item, wav_explosion
+    global music_bg, wav_item
     del music_bg
     del wav_item
-    del wav_explosion
+
 
 if __name__ == '__main__':
     gfw.run_main()

@@ -15,6 +15,7 @@ class Monster3:
     Over = False
     cc = []
     score = 0
+    Items = False
     # FCOUNT = 10
     def __init__(self):
 
@@ -99,7 +100,8 @@ class Monster3:
         if self.ball != None:
             collides = gobj.collides_box(self, self.ball)
 
-            if collides:
+            if collides and gfw.world.count_at(gfw.layer.ball)>0:
+                Monster3.Items = True
                 gfw.world.remove(self.ball)
                 self.ball = None
                 Monster3.cc.append((x, y))
@@ -117,6 +119,8 @@ class Monster3:
 
         collides = gobj.collides_box(self, self.player)
         if collides:
+            self.action = 'Dead'
+            Monster3.Items = False
             # print("충돌")
             dead = self.player.decrease_life()
             if dead:
@@ -181,15 +185,16 @@ class Monster3:
             self.remove()
 
             Monster3.score += 10
+            if Monster3.Items == True:
+                self.itemnum = random.randint(0, 2)
 
-            self.itemnum = random.randint(0, 2)
+                # print(self.itemnum )
+                self.item = Item(self.itemnum, x, y)
+                gfw.world.add(gfw.layer.item3, self.item)
+                #print("개수 확인")
+                #print(gfw.world.count_at(gfw.layer.item3))
 
-            # print(self.itemnum )
-            self.item = Item(self.itemnum, x, y)
-            gfw.world.add(gfw.layer.item3, self.item)
 
-            print("개수 확인")
-            print(gfw.world.count_at(gfw.layer.item3))
 
 
 

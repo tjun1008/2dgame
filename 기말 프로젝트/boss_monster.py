@@ -19,7 +19,7 @@ class Boss_monster:
     def __init__(self):
 
 
-        self.PAT_POSITIONS = [(0, 150), (1200, 250)]
+        self.PAT_POSITIONS = [(0, 150),(1200, 250)]
 
 
         if len(Boss_monster.images) == 0:

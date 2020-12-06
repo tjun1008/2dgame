@@ -2,12 +2,15 @@ from pico2d import *
 from gobj import *
 from boss_monster import  Boss_monster
 import gfw
+from background import HorzScrollBackground
 
 
 class Stage5:
     def __init__(self):
-        global grass,background
-        background = load_image('image/background1.png')
+        global grass,bg
+        for n, speed in [(1, 30)]:
+            bg = HorzScrollBackground('image/background1.png')
+            bg.speed = speed
         grass = Grass()
 
         global zombie_time
@@ -16,10 +19,11 @@ class Stage5:
 
 
     def draw(self):
-        background.draw(640, 360)
+        bg.draw()
         grass.draw()
 
     def update(self):
+        bg.update()
         global zombie_time
         zombie_time -= 1
 
