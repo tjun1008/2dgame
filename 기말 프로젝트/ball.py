@@ -13,7 +13,6 @@ class Ball:
         self.radius = self.image.h // 2
 
 
-        # print('Radius = %d' % self.radius)
 
     def draw(self):
         self.image.draw(*self.pos)
@@ -27,7 +26,6 @@ class Ball:
         if x < -100 or x > get_canvas_width() + 100:
             if x > get_canvas_width() + Ball.SIZE:
                 gfw.world.remove(self)
-                #print('Ball count - %d' % len(Ball.balls))
 
 
         self.pos = x, y

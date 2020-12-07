@@ -8,9 +8,6 @@ def unindent():
     global level
     level -= 1
 
-def print_indent():
-    for i in range(level):
-        print("    ", end='')
 
 
 class BehaviorTree:
@@ -22,8 +19,7 @@ class BehaviorTree:
     def run(self):
         self.root.run()
 
-    def print(self):
-        self.root.print()
+
 
     @staticmethod
     def build(dict):
@@ -55,13 +51,7 @@ class SelectorNode(Node):
         self.prev_running_pos = 0
         return BehaviorTree.FAIL
 
-    def print(self):
-        print_indent()
-        print("SELECTOR NODE: " + self.name)
-        indent()
-        for child in self.children:
-            child.print()
-        unindent()
+
 
 class SequenceNode(Node):
     def __init__(self, name):
@@ -81,13 +71,6 @@ class SequenceNode(Node):
         self.prev_running_pos = 0
         return BehaviorTree.SUCCESS
 
-    def print(self):
-        print_indent()
-        print("SEQUENCE NODE: " + self.name)
-        indent()
-        for child in self.children:
-            child.print()
-        unindent()
 
 
 class LeafNode(Node):
@@ -96,18 +79,13 @@ class LeafNode(Node):
         self.func = func
 
     def add_child(self, child):
-        print("ERROR: you cannot add child node to leaf node")
+        pass
 
     def add_children(self, *children):
-        print("ERROR: you cannot add children node to leaf node")
+        pass
 
     def run(self):
         return self.func()
-
-    def print(self):
-        print_indent()
-        print("LEAF NODE: " + self.name)
-
 
 def build_node(dict):
     name = dict["name"]

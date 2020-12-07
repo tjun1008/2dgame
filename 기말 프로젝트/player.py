@@ -42,7 +42,6 @@ class IdleState:
         self.ball = Ball(self.player.pos, (5, 5))
         gfw.world.add(gfw.layer.ball, self.ball)
         wav_explosion.play()
-        #print('Ball count = %d' % len(Ball.balls))
 
     def handle_event(self, e):
         pair = (e.type, e.key)

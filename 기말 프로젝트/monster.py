@@ -29,7 +29,7 @@ class Monster:
         else:
             self.PAT_POSITIONS = [(0, 100), (1200, 100)]
 
-        print(n)
+
 
         if len(Monster.images) == 0:
             Monster.load_all_images()
@@ -65,11 +65,11 @@ class Monster:
         nearest_index = 0
         for (px, py) in self.PAT_POSITIONS:
             dsq = (x-px)**2 + (y-py)**2
-            # print(':', index, (x,y), '-', (px, py), dsq)
+
             if nearest_dsq > dsq:
                 nearest_dsq = dsq
                 nearest_index = index
-                # print('nearest:', index)
+
             index += 1
         self.patrol_order = nearest_index
         self.set_patrol_target()
@@ -79,7 +79,7 @@ class Monster:
             self.find_nearest_pos()
             return BehaviorTree.SUCCESS
         self.set_target(self.PAT_POSITIONS[self.patrol_order])
-        # print('pos=', self.pos, "patrol order = ", self.patrol_order, " target =", self.target)
+
         self.patrol_order = (self.patrol_order + 1) % len(self.PAT_POSITIONS)
         return BehaviorTree.SUCCESS
 
@@ -89,12 +89,12 @@ class Monster:
         self.update_position()
 
         if self.ball != None:
-            print(gfw.world.count_at(gfw.layer.ball))
+
             collides = gobj.collides_box(self, self.ball)
 
             if collides and gfw.world.count_at(gfw.layer.ball)>0:
                 Monster.Items = True
-                print("뒤짐")
+
                 #gfw.world.remove(self.ball)
                 #self.ball = None
                 Monster.cc.append((x,y))
@@ -109,13 +109,13 @@ class Monster:
                             self.action = 'Dead'
                             self.time = 0
 
-                print(Monster.cc)
+
 
         collides = gobj.collides_box(self, self.player)
         if collides:
             self.action = 'Dead'
             Monster.Items = False
-            print("충돌")
+
             dead = self.player.decrease_life()
             if dead:
                 Monster.Over = True
@@ -156,7 +156,7 @@ class Monster:
 
         self.target = target
         self.delta = dx / distance, dy / distance
-        # print(x,y, tx,ty, dx,dy, '/',distance, dx/distance, dy/distance, 'target=', self.target, ' delta=', self.delta)
+
 
 
 
@@ -183,19 +183,19 @@ class Monster:
         self.fidx = round(self.time * Monster.FPS)
 
         if self.fidx >= len(self.images['Dead']):
-            Monster.score += 10
+
             #1번
             wav_dead.play()
             self.remove()
             if Monster.Items == True:
+                Monster.score += 10
                 self.itemnum = random.randint(0, 2)
 
-                # print(self.itemnum )
+
                 self.item = Item(self.itemnum, x, y)
                 gfw.world.add(gfw.layer.item, self.item)
 
-                #print("개수 확인")
-                #print(gfw.world.count_at(gfw.layer.item))
+
 
             #return BehaviorTree.FAIL
 
@@ -229,7 +229,7 @@ class Monster:
                 count += 1
             images[action] = action_images
         Monster.images[char] = images
-        print('%d images loaded for %s' % (count, char))
+
         return images
 
     def update(self):
@@ -243,7 +243,7 @@ class Monster:
 
         self.bt.run()
         #if gfw.world.count_at(gfw.layer.item)>0:
-            #print("확인1")
+
 
 
         #좀비 다 죽으면 작동 안함
@@ -263,7 +263,7 @@ class Monster:
         x += dx * self.speed * gfw.delta_time
         y += dy * self.speed * gfw.delta_time
 
-        # print(self.pos, self.delta, self.target, x, y, dx, dy)
+
 
         done = False
         tx,ty = self.target

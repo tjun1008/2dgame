@@ -1,3 +1,4 @@
+# -*- conding: utf-8 -*-
 import gfw
 from pico2d import *
 import title_state
@@ -11,7 +12,6 @@ def enter():
 def update():
     global elapsed
     elapsed += gfw.delta_time
-    print(elapsed)
     if elapsed > 1.0:
         gfw.change(title_state)
 

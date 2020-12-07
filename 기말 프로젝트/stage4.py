@@ -67,7 +67,7 @@ class Grass:
 class Portal4:
     def __init__(self):
         self.image = gfw.image.load(RES_DIR + '/portal.png')
-        self.pos = (490, 400)
+        self.pos = (1100,100)
 
     def draw(self):
         self.image.draw(*self.pos)

@@ -51,11 +51,9 @@ class Boss_monster:
         nearest_index = 0
         for (px, py) in self.PAT_POSITIONS:
             dsq = (x - px) ** 2 + (y - py) ** 2
-            # print(':', index, (x,y), '-', (px, py), dsq)
             if nearest_dsq > dsq:
                 nearest_dsq = dsq
                 nearest_index = index
-                # print('nearest:', index)
             index += 1
         self.patrol_order = nearest_index
         self.set_patrol_target()
@@ -65,7 +63,6 @@ class Boss_monster:
             self.find_nearest_pos()
             return BehaviorTree.SUCCESS
         self.set_target(self.PAT_POSITIONS[self.patrol_order])
-        # print('pos=', self.pos, "patrol order = ", self.patrol_order, " target =", self.target)
         self.patrol_order = (self.patrol_order + 1) % len(self.PAT_POSITIONS)
         return BehaviorTree.SUCCESS
 
@@ -85,7 +82,6 @@ class Boss_monster:
                 if len(Boss_monster.cc) == 5:
                     self.action = 'Dead'
                     self.time = 0
-                print(Boss_monster.cc)
 
 
         for (px, py) in self.PAT_POSITIONS:
@@ -117,7 +113,7 @@ class Boss_monster:
 
         self.target = target
         self.delta = dx / distance, dy / distance
-        # print(x,y, tx,ty, dx,dy, '/',distance, dx/distance, dy/distance, 'target=', self.target, ' delta=', self.delta)
+
 
     def do_idle(self):
         if self.action != 'Idle':
@@ -167,7 +163,6 @@ class Boss_monster:
                 count += 1
             images[action] = action_images
         Boss_monster.images[char] = images
-        print('%d images loaded for %s' % (count, char))
         return images
 
     def update(self):
@@ -184,7 +179,6 @@ class Boss_monster:
         x += dx * self.speed * gfw.delta_time
         y += dy * self.speed * gfw.delta_time
 
-        # print(self.pos, self.delta, self.target, x, y, dx, dy)
 
         done = False
         tx, ty = self.target

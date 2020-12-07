@@ -74,11 +74,11 @@ class Monster3:
         nearest_index = 0
         for (px, py) in self.PAT_POSITIONS:
             dsq = (x-px)**2 + (y-py)**2
-            # print(':', index, (x,y), '-', (px, py), dsq)
+
             if nearest_dsq > dsq:
                 nearest_dsq = dsq
                 nearest_index = index
-                # print('nearest:', index)
+
             index += 1
         self.patrol_order = nearest_index
         self.set_patrol_target()
@@ -88,7 +88,7 @@ class Monster3:
             self.find_nearest_pos()
             return BehaviorTree.SUCCESS
         self.set_target(self.PAT_POSITIONS[self.patrol_order])
-        # print('pos=', self.pos, "patrol order = ", self.patrol_order, " target =", self.target)
+
         self.patrol_order = (self.patrol_order + 1) % len(self.PAT_POSITIONS)
         return BehaviorTree.SUCCESS
 
@@ -115,13 +115,13 @@ class Monster3:
                         if (a, b) != (x, y):
                             self.action = 'Dead'
                             self.time = 0
-                print(Monster3.cc)
+
 
         collides = gobj.collides_box(self, self.player)
         if collides:
             self.action = 'Dead'
             Monster3.Items = False
-            # print("충돌")
+
             dead = self.player.decrease_life()
             if dead:
                 Monster3.Over = True
@@ -159,7 +159,7 @@ class Monster3:
 
         self.target = target
         self.delta = dx / distance, dy / distance
-        # print(x,y, tx,ty, dx,dy, '/',distance, dx/distance, dy/distance, 'target=', self.target, ' delta=', self.delta)
+
 
 
 
@@ -180,19 +180,20 @@ class Monster3:
             return BehaviorTree.FAIL
         self.time += gfw.delta_time
         self.fidx = round(self.time * Monster3.FPS)
+
         if self.fidx >= len(self.images['Dead']):
             wav_dead.play()
             self.remove()
 
-            Monster3.score += 10
+
             if Monster3.Items == True:
+                Monster3.score += 10
                 self.itemnum = random.randint(0, 2)
 
-                # print(self.itemnum )
+
                 self.item = Item(self.itemnum, x, y)
                 gfw.world.add(gfw.layer.item3, self.item)
-                #print("개수 확인")
-                #print(gfw.world.count_at(gfw.layer.item3))
+
 
 
 
@@ -227,7 +228,7 @@ class Monster3:
                 count += 1
             images[action] = action_images
         Monster3.images[char] = images
-        print('%d images loaded for %s' % (count, char))
+
         return images
 
     def update(self):
@@ -237,22 +238,6 @@ class Monster3:
             self.ball = gfw.world.object(gfw.layer.ball, 0)
         self.bt.run()
 
-        for it in gfw.world.objects_at(gfw.layer.item3):
-            print("개수 확인3")
-            print(gfw.world.count_at(gfw.layer.item3))
-            if gobj.collides_box(self.player, it):
-                print(it.item)
-                if it.item == 1:
-                    self.player.life += 1
-                    gfw.world.remove(it)
-                if it.item == 2:
-                    print("아이템2")
-                    Monster3.score += 10
-                    gfw.world.remove(it)
-                wav_item.play()
-            break
-
-        # 좀비 다 죽으면 작동 안함
 
     def update_position(self):
         self.time += gfw.delta_time
@@ -263,7 +248,7 @@ class Monster3:
         x += dx * self.speed * gfw.delta_time
         y += dy * self.speed * gfw.delta_time
 
-        # print(self.pos, self.delta, self.target, x, y, dx, dy)
+
 
         done = False
         tx,ty = self.target

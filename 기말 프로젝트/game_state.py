@@ -17,6 +17,7 @@ from item import Item
 
 STATE_IN_GAME,STATE_GAME_OVER,STATE_GAME_CLEAR = range(3)
 
+
 def enter():
     gfw.world.init(['bg','monster', 'ball', 'player','portal','item','item2','item3','ui','asd'])
     global player,stage1,stage2,stage3,stage4,stage5,portal1,portal2,portal3,portal4
@@ -52,6 +53,9 @@ def enter():
     global map
     map = 1
 
+    global switch
+    switch = False
+
     state = STATE_IN_GAME
     #global zombie_time
     #zombie_time = 2
@@ -61,7 +65,7 @@ def enter():
 
 def update():
     global stage1,stage2,stage3,stage4,stage5,map
-    global state
+    global state, switch
     gfw.world.update()
     #player.update()
     #for b in Ball.balls: b.update()
@@ -72,7 +76,7 @@ def update():
         player.pos = 30, 650
         del (stage1)
         map += 1
-        print(map)
+
 
     if Monster.Over == True or Monster2.Over == True or Monster3.Over == True:
         end_game()
@@ -83,23 +87,38 @@ def update():
         if collides_box(player, portal2):
             player.pos = 100, 110
             del (stage2)
+            switch = True
             map += 1
-            print(map)
+
 
     if map == 3:
+        if gfw.world.count_at(gfw.layer.monster) > 0 and switch == True:
+            for it in gfw.world.objects_at(gfw.layer.monster):
+                gfw.world.remove(it)
+
+        if gfw.world.count_at(gfw.layer.item) > 0 and switch == True:
+            for it in gfw.world.objects_at(gfw.layer.item):
+                gfw.world.remove(it)
+        switch = False
+
         stage3.update()
         get_item2()
-        if gfw.world.count_at(gfw.layer.monster) > 0:
-            Monster.remove(gfw.layer.monster)
-        if gfw.world.count_at(gfw.layer.item) > 0:
-            Monster.remove(gfw.layer.item)
         if collides_box(player, portal3):
             player.pos = 100, 110
             del (stage3)
+            switch = True
             map += 1
-            print(map)
+
 
     if map == 4:
+        if gfw.world.count_at(gfw.layer.monster) > 0 and switch == True:
+            for it in gfw.world.objects_at(gfw.layer.monster):
+                gfw.world.remove(it)
+
+        if gfw.world.count_at(gfw.layer.item) > 0 and switch == True:
+            for it in gfw.world.objects_at(gfw.layer.item):
+                gfw.world.remove(it)
+        switch = False
         stage4.update()
         get_item3()
         if gfw.world.count_at(gfw.layer.item2) > 0:
@@ -109,10 +128,19 @@ def update():
         if collides_box(player, portal4):
             player.pos = 100, 110
             del (stage4)
+            switch = True
             map += 1
-            print(map)
+
 
     if map ==5:
+        if gfw.world.count_at(gfw.layer.monster) > 0 and switch == True:
+            for it in gfw.world.objects_at(gfw.layer.monster):
+                gfw.world.remove(it)
+
+        if gfw.world.count_at(gfw.layer.item) > 0 and switch == True:
+            for it in gfw.world.objects_at(gfw.layer.item):
+                gfw.world.remove(it)
+        switch = False
         stage5.update()
         if gfw.world.count_at(gfw.layer.item3) > 0:
             Monster.remove(gfw.layer.item3)
@@ -120,6 +148,7 @@ def update():
             Monster.remove(gfw.layer.monster)
         if Boss_monster.finish == True:
             del (stage5)
+            switch = True
             clear_game()
             map +=1
 
@@ -134,10 +163,8 @@ def update():
 
 def get_item1():
     for it in gfw.world.objects_at(gfw.layer.item):
-        print("개수 확인1")
-        print(gfw.world.count_at(gfw.layer.item))
+
         if collides_box(player, it):
-            print(it.item)
             if it.item == 0:
                 gfw.world.remove(it)
             if it.item == 1:
@@ -152,10 +179,8 @@ def get_item1():
 
 def get_item2():
     for it in gfw.world.objects_at(gfw.layer.item2):
-        # print("개수 확인1")
-        # print(gfw.world.count_at(gfw.layer.item))
+
         if collides_box(player, it):
-            print(it.item)
             if it.item == 0:
                 gfw.world.remove(it)
             if it.item == 1:
@@ -170,10 +195,9 @@ def get_item2():
 
 def get_item3():
     for it in gfw.world.objects_at(gfw.layer.item3):
-        # print("개수 확인1")
-        # print(gfw.world.count_at(gfw.layer.item))
+
         if collides_box(player, it):
-            print(it.item)
+
             if it.item == 0:
                 gfw.world.remove(it)
             if it.item == 1:
@@ -190,7 +214,7 @@ def get_item3():
 def clear_game():
     global state
     global music_bg
-    print('Dead')
+
     music_bg.stop()
     gfw.world.remove(player)
     state = STATE_GAME_CLEAR
@@ -198,7 +222,7 @@ def clear_game():
 def end_game():
     global state
     global music_bg
-    print('Dead')
+
     music_bg.stop()
     gfw.world.remove(player)
     state = STATE_GAME_OVER
