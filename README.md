@@ -36,32 +36,16 @@
 ![6](https://github.com/tjun1008/2dgame/blob/master/%EC%88%98%EC%97%85%EB%82%B4%EC%9A%A9/image/7%EC%A3%BC%EC%B0%A8.PNG?raw=true)
    - 7주차 
    
+![7](https://github.com/tjun1008/2dgame/blob/master/%EC%88%98%EC%97%85%EB%82%B4%EC%9A%A9/image/8%EC%A3%BC%EC%B0%A8.PNG?raw=true)
+   - 8주차 
    
-## 4. class 구성정보
-
-![7](https://github.com/tjun1008/2dgame/blob/master/%EC%88%98%EC%97%85%EB%82%B4%EC%9A%A9/image/2d%20%ED%81%B4%EB%9E%98%EC%8A%A4.PNG?raw=true)
-   - 전체적으로 title,logo state, game state, player 클래스, stage 클래스, monster(zombie) 클래스, (fire)ball 클래스가 있다
    
-![8](https://github.com/tjun1008/2dgame/blob/master/%EC%88%98%EC%97%85%EB%82%B4%EC%9A%A9/image/%EC%BA%A1%EC%B2%98.PNG?raw=true)
-   - 게임 흐름으로는 logo title state를 진행한다음 main스테이지인 game 스테이지로 가서 map (stage1)과 프레임워크의 월드를 생성하고 드로우하고 업데이트한다.
-   
-![9](https://github.com/tjun1008/2dgame/blob/master/%EC%88%98%EC%97%85%EB%82%B4%EC%9A%A9/image/map1.PNG?raw=true)
-   - stage 구성은 stage1,2,3,4를 구성한 다음 포탈에 충돌할때마다 map의 변수를 바꿔서 현재있던 stage를 딜리트하고 다음 stage를 그려내는 방식으로 한다.
-   - portal과 몬스터는 모두 스테이지에 그리고 상호작용한다. 따라서 포탈과 몬스터는 스테이지마다 바뀌게된다
-   
-![10](https://github.com/tjun1008/2dgame/blob/master/%EC%88%98%EC%97%85%EB%82%B4%EC%9A%A9/image/character1.PNG?raw=true)
-![11](https://github.com/tjun1008/2dgame/blob/master/%EC%88%98%EC%97%85%EB%82%B4%EC%9A%A9/image/character2.PNG?raw=true)
-   - player은 키를 누를때마다 state를 바꿔서 (idle,running,up,down) state마다 상태를 업데이트하는 방식으로 진행된다
-   
-![12](https://github.com/tjun1008/2dgame/blob/master/%EC%88%98%EC%97%85%EB%82%B4%EC%9A%A9/image/ball1.PNG?raw=true)
-   - player 각 스테이트에서 스페이스바를 누르면 파이어볼을 생성하는 함수를 만들고 gamestate에서 업데이트한다 파이어볼이 스테이지밖에서 나가면 삭제하는 방식으로 인해 메모리를 아낀다
-   
-![13](https://github.com/tjun1008/2dgame/blob/master/%EC%88%98%EC%97%85%EB%82%B4%EC%9A%A9/image/monster1.PNG?raw=true)
-   - stage에서 몬스터를 초기화시키고 몬스터 스테이트에서 ball object를 불러 두 객체를 충돌검사시켜 충돌 확인되면 몬스터가 죽는 모션을하고 delete한다  
-   
-
-## 4. 다뤘으면 하는것
-   - 아이템을 얻어 저장하는기능?을 했으면 좋겠다
+## 4. 지인 인터뷰
+   - 게임에 대한 소감 : 간단한 미니게임같은 느낌이 들었다
+   - 게임의 평점 : 6점? 너무 단순한 느낌도 들고 버그도 있어서 아쉬웠다
+   - 아쉬웠던점 : 아까도 말했다시피 몬스터 부딪힐때 바로 죽는경우도 있고해서 게임진행이 어려웠고 보스몬스터단계가 아쉬웠다
+   - 괜찮은점 : 게임이 단순해서 누구나 쉽게 할 수 있고 플레이 타임이 짧은점?
+   - 하고싶은 말 : 만드느라 수고했다~
    
    
    
